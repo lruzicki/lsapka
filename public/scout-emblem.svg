@@ -1,0 +1,15 @@
+<svg width="300" height="300" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M150 20L180 80H120L150 20Z" fill="#C41E3A" stroke="#C41E3A" stroke-width="2"/>
+  <path d="M120 90L90 150H150L120 90Z" fill="#C41E3A" stroke="#C41E3A" stroke-width="2"/>
+  <path d="M180 90L210 150H150L180 90Z" fill="#C41E3A" stroke="#C41E3A" stroke-width="2"/>
+  <path d="M150 160L140 180H160L150 160Z" fill="#C41E3A" stroke="#C41E3A" stroke-width="2"/>
+  <path d="M140 180L130 200H170L160 180H140Z" fill="#C41E3A" stroke="#C41E3A" stroke-width="2"/>
+  <path d="M130 200L120 220H180L170 200H130Z" fill="#C41E3A" stroke="#C41E3A" stroke-width="2"/>
+  <path d="M120 220L110 240H190L180 220H120Z" fill="#C41E3A" stroke="#C41E3A" stroke-width="2"/>
+  <path d="M110 240L100 260H200L190 240H110Z" fill="#C41E3A" stroke="#C41E3A" stroke-width="2"/>
+  <path d="M150 100L155 110H145L150 100Z" fill="white" stroke="#C41E3A" stroke-width="1"/>
+  <text x="150" y="130" text-anchor="middle" font-size="24" font-weight="bold" fill="white">LS</text>
+  <text x="120" y="120" text-anchor="middle" font-size="18" font-weight="bold" fill="white">O</text>
+  <text x="180" y="120" text-anchor="middle" font-size="18" font-weight="bold" fill="white">C</text>
+  <text x="150" y="80" text-anchor="middle" font-size="18" font-weight="bold" fill="white">N</text>
+</svg>
