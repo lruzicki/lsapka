@@ -8,13 +8,9 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { name, email, subject, message, recipient } = body;
 
-
-        // // Wybór adresu email na podstawie odbiorcy
-        // const toEmail = recipient === 'komenda' 
-        // ? 'komenda@lesnaszkolka.pl' 
-        // : 'kr@lesnaszkolka.pl';
-    // Używamy testowego adresu email
-    const toEmail = 'lruzicki@lesnaszkolka.org';
+    const toEmail = recipient === 'komenda' 
+    ? 'komenda@lesnaszkolka.pl' 
+    : 'kr@lesnaszkolka.pl';
 
     await emailService.sendEmail(toEmail, subject, {
       name,
