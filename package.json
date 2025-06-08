@@ -9,9 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@azure/communication-email": "^1.0.0",
     "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@types/leaflet": "^1.9.18",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "leaflet": "^1.9.4",
     "ls-web": "file:",
     "lucide-react": "^0.501.0",
     "next": "15.3.1",

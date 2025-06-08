@@ -3,7 +3,39 @@
 import { useState } from "react"
 
 export default function ContactSection() {
-  const [recipient, setRecipient] = useState<"komenda" | "kr">("komenda")
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: '',
+    recipient: 'komenda'
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) throw new Error('Failed to send message');
+      
+      setSubmitStatus('success');
+      setFormData({ name: '', email: '', subject: '', message: '', recipient: 'komenda' });
+    } catch (error) {
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <section id="kontakt" className="section-padding bg-gray-50">
@@ -23,26 +55,26 @@ export default function ContactSection() {
             <div className="mb-6">
               <div className="flex rounded-md overflow-hidden border border-gray-300">
                 <button
-                  className={`px-4 py-2 flex-1 ${recipient === "komenda" ? "bg-[rgb(var(--primary))] text-white" : "bg-gray-100 text-gray-700"}`}
-                  onClick={() => setRecipient("komenda")}
+                  className={`px-4 py-2 flex-1 ${formData.recipient === "komenda" ? "bg-[rgb(var(--primary))] text-white" : "bg-gray-100 text-gray-700"}`}
+                  onClick={(e) => { e.preventDefault(); setFormData({ ...formData, recipient: "komenda" }); }}
                 >
                   Komenda Kręgu
                 </button>
                 <button
-                  className={`px-4 py-2 flex-1 ${recipient === "kr" ? "bg-[rgb(var(--primary))] text-white" : "bg-gray-100 text-gray-700"}`}
-                  onClick={() => setRecipient("kr")}
+                  className={`px-4 py-2 flex-1 ${formData.recipient === "kr" ? "bg-[rgb(var(--primary))] text-white" : "bg-gray-100 text-gray-700"}`}
+                  onClick={(e) => { e.preventDefault(); setFormData({ ...formData, recipient: "kr" }); }}
                 >
                   Komisja Rewizyjna
                 </button>
               </div>
               <p className="text-sm text-gray-500 mt-2">
-                {recipient === "komenda"
+                {formData.recipient === "komenda"
                   ? "Wiadomość zostanie wysłana do Komendy Kręgu"
                   : "Wiadomość zostanie wysłana do Komisji Rewizyjnej"}
               </p>
             </div>
 
-            <form className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
                   Imię i nazwisko
@@ -50,6 +82,8 @@ export default function ContactSection() {
                 <input
                   type="text"
                   id="name"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[rgb(var(--primary))] focus:border-transparent"
                   placeholder="Jan Kowalski"
                 />
@@ -61,6 +95,8 @@ export default function ContactSection() {
                 <input
                   type="email"
                   id="email"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[rgb(var(--primary))] focus:border-transparent"
                   placeholder="jan@example.com"
                 />
@@ -72,6 +108,8 @@ export default function ContactSection() {
                 <input
                   type="text"
                   id="subject"
+                  value={formData.subject}
+                  onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[rgb(var(--primary))] focus:border-transparent"
                   placeholder="Temat wiadomości"
                 />
@@ -83,6 +121,8 @@ export default function ContactSection() {
                 <textarea
                   id="message"
                   rows={5}
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[rgb(var(--primary))] focus:border-transparent"
                   placeholder="Treść wiadomości..."
                 ></textarea>
@@ -98,11 +138,19 @@ export default function ContactSection() {
               </div>
               <button
                 type="submit"
-                className="bg-[rgb(var(--primary))] hover:bg-[rgb(var(--primary-dark))] text-white px-6 py-3 rounded-md transition-colors"
+                disabled={isSubmitting}
+                className="bg-[rgb(var(--primary))] hover:bg-[rgb(var(--primary-dark))] text-white px-6 py-3 rounded-md transition-colors disabled:opacity-50"
               >
-                Wyślij wiadomość
+                {isSubmitting ? 'Wysyłanie...' : 'Wyślij wiadomość'}
               </button>
             </form>
+
+            {submitStatus === 'success' && (
+              <p className="text-green-600">Wiadomość została wysłana!</p>
+            )}
+            {submitStatus === 'error' && (
+              <p className="text-red-600">Wystąpił błąd podczas wysyłania wiadomości.</p>
+            )}
           </div>
 
           <div className="bg-white p-8 rounded-lg shadow-sm">
@@ -128,8 +176,7 @@ export default function ContactSection() {
                 </div>
                 <div>
                   <h4 className="font-bold text-lg">Email</h4>
-                  <p className="text-gray-600">komenda@lesnaszkolka.pl</p>
-                  <p className="text-gray-600">kr@lesnaszkolka.pl</p>
+                  <p className="text-gray-600">komenda@lesnaszkolka.org</p>
                 </div>
               </div>
 
@@ -152,7 +199,7 @@ export default function ContactSection() {
                 </div>
                 <div>
                   <h4 className="font-bold text-lg">Telefon</h4>
-                  <p className="text-gray-600">+48 123 456 789</p>
+                  <p className="text-gray-600">Nie posiadamy numeru telefonu</p>
                 </div>
               </div>
 
@@ -176,7 +223,7 @@ export default function ContactSection() {
                 </div>
                 <div>
                   <h4 className="font-bold text-lg">Adres</h4>
-                  <p className="text-gray-600">ul. Harcerska 12, 00-001 Warszawa</p>
+                  <p className="text-gray-600">ul. Stryjska 24, 81-506 Gdynia</p>
                 </div>
               </div>
 
@@ -184,7 +231,9 @@ export default function ContactSection() {
                 <h4 className="font-bold text-lg mb-4">Znajdź nas</h4>
                 <div className="flex space-x-4">
                   <a
-                    href="#"
+                    href="https://www.facebook.com/lesnaszkolka"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="h-10 w-10 bg-[rgba(var(--primary),0.1)] rounded-full flex items-center justify-center hover:bg-[rgb(var(--primary))] hover:text-white transition-colors"
                   >
                     <svg
@@ -203,7 +252,9 @@ export default function ContactSection() {
                     </svg>
                   </a>
                   <a
-                    href="#"
+                    href="https://www.instagram.com/lesnaszkolka/"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="h-10 w-10 bg-[rgba(var(--primary),0.1)] rounded-full flex items-center justify-center hover:bg-[rgb(var(--primary))] hover:text-white transition-colors"
                   >
                     <svg
@@ -224,7 +275,9 @@ export default function ContactSection() {
                     </svg>
                   </a>
                   <a
-                    href="#"
+                    href="https://www.youtube.com/watch?v=lIESC0wmstQ"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="h-10 w-10 bg-[rgba(var(--primary),0.1)] rounded-full flex items-center justify-center hover:bg-[rgb(var(--primary))] hover:text-white transition-colors"
                   >
                     <svg

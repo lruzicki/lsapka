@@ -108,7 +108,7 @@ export default function Navbar() {
                   >
                     Przekaż 1,5%
                   </Link>
-                  <Link
+                  {/* <Link
                     href="/login"
                     className={`flex items-center gap-2 px-4 py-2 rounded-md transition-colors ${
                       scrolled
@@ -118,7 +118,7 @@ export default function Navbar() {
                   >
                     <LogIn size={18} />
                     <span>Login</span>
-                  </Link>
+                  </Link> */}
                 </nav>
               </>
             )}

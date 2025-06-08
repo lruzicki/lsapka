@@ -8,7 +8,7 @@ export default function EventsSection() {
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Wydarzenia</h2>
           <div className="w-20 h-1 bg-[rgb(var(--primary))] mx-auto mb-8"></div>
           <p className="text-lg text-gray-700">
-            Organizujemy kursy, warsztaty, obozy i inne wydarzenia dla harcerzy i instruktorów. Sprawdź nasze
+            Podstawą naszego działania są cotygodniowe zbiórki harcerskie. Organizujemy kursy, warsztaty, obozy i inne wydarzenia dla harcerzy i instruktorów. Sprawdź nasze
             nadchodzące wydarzenia i dołącz do nas!
           </p>
         </div>
@@ -19,39 +19,19 @@ export default function EventsSection() {
             <div className="space-y-6">
               <div className="flex">
                 <div className="flex-shrink-0 w-16 h-16 bg-[rgba(var(--primary),0.1)] rounded-lg flex flex-col items-center justify-center mr-4">
-                  <span className="font-bold text-[rgb(var(--primary))]">15</span>
-                  <span className="text-sm text-gray-600">Cze</span>
+                  <span className="font-bold text-[rgb(var(--primary))]">6</span>
+                  <span className="text-sm text-gray-600">Sie</span>
                 </div>
                 <div>
-                  <h4 className="font-bold text-lg">Obóz letni "Leśne Wędrówki"</h4>
-                  <p className="text-gray-600">15-30 czerwca 2025, Puszcza Kampinoska</p>
-                </div>
-              </div>
-
-              <div className="flex">
-                <div className="flex-shrink-0 w-16 h-16 bg-[rgba(var(--primary),0.1)] rounded-lg flex flex-col items-center justify-center mr-4">
-                  <span className="font-bold text-[rgb(var(--primary))]">10</span>
-                  <span className="text-sm text-gray-600">Wrz</span>
-                </div>
-                <div>
-                  <h4 className="font-bold text-lg">Rozpoczęcie roku harcerskiego</h4>
-                  <p className="text-gray-600">10 września 2025, Warszawa</p>
-                </div>
-              </div>
-
-              <div className="flex">
-                <div className="flex-shrink-0 w-16 h-16 bg-[rgba(var(--primary),0.1)] rounded-lg flex flex-col items-center justify-center mr-4">
-                  <span className="font-bold text-[rgb(var(--primary))]">11</span>
-                  <span className="text-sm text-gray-600">Lis</span>
-                </div>
-                <div>
-                  <h4 className="font-bold text-lg">Święto Niepodległości - uroczysty apel</h4>
-                  <p className="text-gray-600">11 listopada 2025, Warszawa</p>
+                  <h4 className="font-bold text-lg">Obóz letni</h4>
+                  <p className="text-gray-600">6-21 sierpnia 2025, Jezioro Strupino</p>
                 </div>
               </div>
             </div>
             <Link
-              href="/wydarzenia"
+              href="https://www.facebook.com/lesnaszkolka"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-block mt-8 text-[rgb(var(--primary))] font-medium hover:underline"
             >
               Zobacz pełen kalendarz →
@@ -60,11 +40,9 @@ export default function EventsSection() {
 
           <div className="bg-white p-8 rounded-lg shadow-sm border border-gray-100">
             <h3 className="text-2xl font-bold mb-6 text-[rgb(var(--primary))]">Najbliższe wydarzenie</h3>
-            <h4 className="font-bold text-xl mb-4">Obóz letni "Leśne Wędrówki"</h4>
+            <h4 className="font-bold text-xl mb-4">Obóz letni</h4>
             <p className="text-gray-700 mb-6">
-              Zapraszamy wszystkich harcerzy na obóz letni, który odbędzie się w dniach 15-30 czerwca 2025 roku w
-              Puszczy Kampinoskiej. W programie: wędrówki, zajęcia survivalowe, warsztaty rzemiosła, ogniska i wiele
-              innych atrakcji!
+              Zapraszamy wszystkich harcerzy na obóz letni, który odbędzie się w dniach 6-21 sierpnia 2025 roku nad jeziorem Strupino.
             </p>
             <div className="space-y-3 mb-6">
               <div className="flex items-center">
@@ -83,7 +61,7 @@ export default function EventsSection() {
                   <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
                   <circle cx="12" cy="10" r="3" />
                 </svg>
-                <span>Puszcza Kampinoska, Polska</span>
+                <span>Miejsce obozowe nad jeziorem Strupino województwo pomorskie, powiat kościerski, gmina Kościerzyna</span>
               </div>
               <div className="flex items-center">
                 <svg
@@ -109,7 +87,7 @@ export default function EventsSection() {
                   <path d="M12 18h.01" />
                   <path d="M16 18h.01" />
                 </svg>
-                <span>15-30 czerwca 2025</span>
+                <span>6-21 sierpnia 2025</span>
               </div>
               <div className="flex items-center">
                 <svg
@@ -128,11 +106,13 @@ export default function EventsSection() {
                   <path d="M3 5v14a2 2 0 0 0 2 2h16v-5" />
                   <path d="M18 12a2 2 0 0 0 0 4h4v-4Z" />
                 </svg>
-                <span>Koszt: 1200 zł</span>
+                <span>Koszt: 1750 zł</span>
               </div>
             </div>
             <Link
-              href="/wydarzenia/oboz-letni-2025"
+              href="https://www.facebook.com/lesnaszkolka"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-block bg-[rgb(var(--primary))] hover:bg-[rgb(var(--primary-dark))] text-white px-6 py-3 rounded-md transition-colors"
             >
               Szczegóły i zapisy

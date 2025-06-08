@@ -1,122 +1,98 @@
+"use client"
+
+import { useEffect, useRef } from 'react'
+import L from 'leaflet'
+import { units, mapBounds } from '@/lib/map-data'
+import 'leaflet/dist/leaflet.css'
+
 export default function MapSection() {
+  const mapRef = useRef<L.Map | null>(null)
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      // Fix for Leaflet icon issues in Next.js
+      const L = require('leaflet')
+      delete L.Icon.Default.prototype._getIconUrl
+      L.Icon.Default.mergeOptions({
+        iconRetinaUrl: '/images/marker-icon-2x.png',
+        iconUrl: '/images/marker-icon.png',
+        shadowUrl: '/images/marker-shadow.png',
+      })
+
+      if (!mapRef.current) {
+        // Initialize map
+        mapRef.current = L.map('map').setView([
+          (mapBounds.boundingBox.north + mapBounds.boundingBox.south) / 2,
+          (mapBounds.boundingBox.east + mapBounds.boundingBox.west) / 2
+        ], 11)
+
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(mapRef.current)
+
+        // Create custom icon
+        const customIcon = L.icon({
+          iconUrl: '/images/marker-icon.png',
+          iconRetinaUrl: '/images/marker-icon-2x.png',
+          iconSize: [25, 25], // Zmniejszony rozmiar z 256x256
+          iconAnchor: [12, 12], // Punkt zaczepienia (połowa rozmiaru)
+          popupAnchor: [0, -12], // Punkt gdzie pojawia się popup (nad markerem)
+        })
+
+        // Add markers for each unit
+        units.forEach(unit => {
+          const marker = L.marker(
+            [unit.coordinates.lat, unit.coordinates.lng],
+            { icon: customIcon }
+          )
+            .addTo(mapRef.current!)
+            .bindPopup(`<b>${unit.unit.name}</b>`)
+        })
+
+        // Set map bounds
+        mapRef?.current?.fitBounds([
+          [mapBounds.boundingBox.north, mapBounds.boundingBox.east],
+          [mapBounds.boundingBox.south, mapBounds.boundingBox.west]
+        ])
+      }
+    }
+
+    return () => {
+      if (mapRef.current) {
+        mapRef.current.remove()
+        mapRef.current = null
+      }
+    }
+  }, [])
+
   return (
     <section id="mapa" className="section-padding">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Mapa drużyn</h2>
           <div className="w-20 h-1 bg-[rgb(var(--primary))] mx-auto mb-8"></div>
-          <p className="text-lg text-gray-700">Znajdź nasze drużyny i kręgi instruktorskie w całej Polsce.</p>
+          <p className="text-lg text-gray-700">
+            Znajdź nasze drużyny i kręgi instruktorskie w całej Polsce.
+          </p>
         </div>
 
         <div className="bg-white rounded-lg overflow-hidden shadow-sm">
-          <div className="aspect-w-16 aspect-h-9 w-full h-[400px] relative">
-            {/* Tutaj będzie mapa - na razie placeholder */}
-            <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-              <p className="text-gray-500">Mapa lokalizacji naszych drużyn</p>
-            </div>
-          </div>
+          <div id="map" className="w-full h-[400px]" />
+          
           <div className="p-8">
             <h3 className="text-xl font-bold mb-6">Nasze lokalizacje</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              <div className="flex items-start">
-                <div className="h-10 w-10 rounded-full bg-[rgb(var(--primary))] flex items-center justify-center flex-shrink-0 mr-4">
-                  <span className="text-white font-bold">1</span>
+              {units.map((unit, index) => (
+                <div key={unit.unit.number} className="flex items-start">
+                  <div className="h-10 w-10 rounded-full bg-[rgb(var(--primary))] flex items-center justify-center flex-shrink-0 mr-4">
+                    <span className="text-white font-bold">{unit.unit.number}</span>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-lg">{unit.unit.name}</h4>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="font-bold text-lg">Gdańsk</h4>
-                  <p className="text-gray-600">3 DH "Morskie Fale"</p>
-                </div>
-              </div>
-              <div className="flex items-start">
-                <div className="h-10 w-10 rounded-full bg-[rgb(var(--primary))] flex items-center justify-center flex-shrink-0 mr-4">
-                  <span className="text-white font-bold">2</span>
-                </div>
-                <div>
-                  <h4 className="font-bold text-lg">Gdynia</h4>
-                  <p className="text-gray-600">5 DH "Bałtyckie Orły"</p>
-                </div>
-              </div>
-              <div className="flex items-start">
-                <div className="h-10 w-10 rounded-full bg-[rgb(var(--primary))] flex items-center justify-center flex-shrink-0 mr-4">
-                  <span className="text-white font-bold">3</span>
-                </div>
-                <div>
-                  <h4 className="font-bold text-lg">Sopot</h4>
-                  <p className="text-gray-600">7 DH "Nadmorskie Sokoły"</p>
-                </div>
-              </div>
-              <div className="flex items-start">
-                <div className="h-10 w-10 rounded-full bg-[rgb(var(--primary))] flex items-center justify-center flex-shrink-0 mr-4">
-                  <span className="text-white font-bold">4</span>
-                </div>
-                <div>
-                  <h4 className="font-bold text-lg">Warszawa</h4>
-                  <p className="text-gray-600">1 DH "Leśne Wilki"</p>
-                </div>
-              </div>
-              <div className="flex items-start">
-                <div className="h-10 w-10 rounded-full bg-[rgb(var(--primary))] flex items-center justify-center flex-shrink-0 mr-4">
-                  <span className="text-white font-bold">5</span>
-                </div>
-                <div>
-                  <h4 className="font-bold text-lg">Kraków</h4>
-                  <p className="text-gray-600">2 DH "Sokoły"</p>
-                </div>
-              </div>
-              <div className="flex items-start">
-                <div className="h-10 w-10 rounded-full bg-[rgb(var(--primary))] flex items-center justify-center flex-shrink-0 mr-4">
-                  <span className="text-white font-bold">6</span>
-                </div>
-                <div>
-                  <h4 className="font-bold text-lg">Poznań</h4>
-                  <p className="text-gray-600">4 DH "Puszczyki"</p>
-                </div>
-              </div>
-              <div className="flex items-start">
-                <div className="h-10 w-10 rounded-full bg-[rgb(var(--primary))] flex items-center justify-center flex-shrink-0 mr-4">
-                  <span className="text-white font-bold">7</span>
-                </div>
-                <div>
-                  <h4 className="font-bold text-lg">Wrocław</h4>
-                  <p className="text-gray-600">8 DH "Odrzańskie Bobry"</p>
-                </div>
-              </div>
-              <div className="flex items-start">
-                <div className="h-10 w-10 rounded-full bg-[rgb(var(--primary))] flex items-center justify-center flex-shrink-0 mr-4">
-                  <span className="text-white font-bold">8</span>
-                </div>
-                <div>
-                  <h4 className="font-bold text-lg">Łódź</h4>
-                  <p className="text-gray-600">9 DH "Miejskie Jastrzębie"</p>
-                </div>
-              </div>
-              <div className="flex items-start">
-                <div className="h-10 w-10 rounded-full bg-[rgb(var(--primary))] flex items-center justify-center flex-shrink-0 mr-4">
-                  <span className="text-white font-bold">9</span>
-                </div>
-                <div>
-                  <h4 className="font-bold text-lg">Szczecin</h4>
-                  <p className="text-gray-600">10 DH "Portowe Fregaty"</p>
-                </div>
-              </div>
-              <div className="flex items-start">
-                <div className="h-10 w-10 rounded-full bg-[rgb(var(--primary))] flex items-center justify-center flex-shrink-0 mr-4">
-                  <span className="text-white font-bold">10</span>
-                </div>
-                <div>
-                  <h4 className="font-bold text-lg">Katowice</h4>
-                  <p className="text-gray-600">11 DH "Śląskie Orły"</p>
-                </div>
-              </div>
-              <div className="flex items-start">
-                <div className="h-10 w-10 rounded-full bg-[rgb(var(--primary))] flex items-center justify-center flex-shrink-0 mr-4">
-                  <span className="text-white font-bold">11</span>
-                </div>
-                <div>
-                  <h4 className="font-bold text-lg">Lublin</h4>
-                  <p className="text-gray-600">12 DH "Wschodni Tropiciele"</p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
