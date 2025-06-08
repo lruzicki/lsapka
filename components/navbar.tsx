@@ -99,9 +99,9 @@ export default function Navbar() {
                   <Link href="#kontakt" className="hover:text-[rgb(var(--primary))] transition-colors">
                     Kontakt
                   </Link>
-                  <Link href="/zasiewy" className="hover:text-[rgb(var(--primary))] transition-colors">
+                  {/* <Link href="/zasiewy" className="hover:text-[rgb(var(--primary))] transition-colors">
                     Zasiewy
-                  </Link>
+                  </Link> */}
                   <Link
                     href="#wsparcie"
                     className="flex items-center px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-md shadow-sm transition-colors"

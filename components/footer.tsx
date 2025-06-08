@@ -17,8 +17,7 @@ export default function Footer() {
               </div>
             </div>
             <p className="text-gray-400 text-sm">
-              Wspólnota instruktorów harcerskich, którzy kontynuują tradycje leśnych kursów instruktorskich i wychowania
-              w duchu harcerskich wartości.
+            Podstawą naszego działania są cotygodniowe zbiórki harcerskie. Organizujemy kursy, warsztaty, obozy i inne wydarzenia dla harcerzy i instruktorów.
             </p>
           </div>
 
@@ -149,10 +148,12 @@ export default function Footer() {
             © {new Date().getFullYear()} Leśna Szkółka. Wszelkie prawa zastrzeżone.
           </p>
           <div className="flex space-x-4 mt-4 md:mt-0">
-            <a href="/dokumenty/polityka-prywatnosci" className="text-gray-400 hover:text-white transition-colors">
+            <a                     href="/rodo-ls-przetwarzanie-danych-osobowych.pdf" 
+                    target="_blank"  className="text-gray-400 hover:text-white transition-colors">
               Polityka prywatności
             </a>
-            <a href="/dokumenty/regulamin" className="text-gray-400 hover:text-white transition-colors">
+            <a href="/regulamin.pdf" 
+                    target="_blank"   className="text-gray-400 hover:text-white transition-colors">
               Regulamin
             </a>
           </div>

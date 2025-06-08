@@ -131,7 +131,12 @@ export default function ContactSection() {
                 <input type="checkbox" id="rodo" className="mt-1 mr-2" />
                 <label htmlFor="rodo" className="text-sm text-gray-700">
                   Wyrażam zgodę na przetwarzanie moich danych osobowych zgodnie z{" "}
-                  <a href="/dokumenty/rodo" className="text-[rgb(var(--primary))] hover:underline">
+                  <a 
+                    href="/rodo-ls-przetwarzanie-danych-osobowych.pdf" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="text-[rgb(var(--primary))] hover:underline"
+                  >
                     polityką RODO
                   </a>
                 </label>
