@@ -13,6 +13,7 @@ import {
   DollarSign,
   ImageIcon,
   Home,
+  Tent,
 } from "lucide-react"
 
 export default function DashboardSidebar() {
@@ -28,6 +29,11 @@ export default function DashboardSidebar() {
       title: "Kalendarz",
       icon: <Calendar className="h-5 w-5" />,
       href: "/dashboard/calendar",
+    },
+    {
+      title: "Biwak",
+      icon: <Tent className="h-5 w-5" />,
+      href: "/dashboard/biwak",
     },
     {
       title: "Karty wyjazdowe",
