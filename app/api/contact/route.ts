@@ -8,6 +8,35 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { name, email, subject, message, recipient } = body;
 
+    // Walidacja długości danych
+    if (!name || name.length > 100) {
+      return NextResponse.json(
+        { error: 'Imię i nazwisko nie może być dłuższe niż 100 znaków' },
+        { status: 400 }
+      );
+    }
+
+    if (!subject || subject.length > 200) {
+      return NextResponse.json(
+        { error: 'Temat nie może być dłuższy niż 200 znaków' },
+        { status: 400 }
+      );
+    }
+
+    if (!message || message.length > 2000) {
+      return NextResponse.json(
+        { error: 'Wiadomość nie może być dłuższa niż 2000 znaków' },
+        { status: 400 }
+      );
+    }
+
+    if (!email || !email.includes('@')) {
+      return NextResponse.json(
+        { error: 'Nieprawidłowy adres email' },
+        { status: 400 }
+      );
+    }
+
     const toEmail = recipient === 'komenda' 
     ? 'komenda@lesnaszkolka.pl' 
     : 'kr@lesnaszkolka.pl';

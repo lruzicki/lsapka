@@ -35,11 +35,11 @@ export const mapBounds: MapBounds = {
 };
 
 export const mapPins: MapPin[] = [
-  {
-    coordinates: {
+    {
+      coordinates: {
       lat: 54.47169444,
-      lng: 18.46097222
-    },
+        lng: 18.46097222
+      },
     units: [
       {
         number: 8,
@@ -51,12 +51,12 @@ export const mapPins: MapPin[] = [
       }
     ],
     district: "Gdynia, Dąbrowa"
-  },
-  {
-    coordinates: {
-      lat: 54.411560,
-      lng: 18.555938
     },
+    {
+      coordinates: {
+      lat: 54.411560,
+        lng: 18.555938
+      },
     units: [
       {
         number: 2,
@@ -64,33 +64,33 @@ export const mapPins: MapPin[] = [
       }
     ],
     district: "Gdańsk, Oliwa"
-  },
-  {
-    coordinates: {
+    },
+    {
+      coordinates: {
       lat: 54.464530,
       lng: 18.496043
-    },
+      },
     units: [
       {
         number: 11,
         name: "11 NGDH \"Sherwood\""
-      },
-      {
+    },
+    {
         number: 25,
         name: "25 NGDH \"Ogniwo\""
       },
       {
         number: 6,
-        name: "6 GGZ \"Floar\""
+        name: "6 GGZ \"Flora\""
       }
     ],
     district: "Gdynia, Wielki Kack"
-  },
-  {
-    coordinates: {
-      lat: 54.430685,
-      lng: 18.467231
     },
+    {
+      coordinates: {
+      lat: 54.430685,
+        lng: 18.467231
+      },
     units: [
       {
         number: 13,
@@ -98,29 +98,29 @@ export const mapPins: MapPin[] = [
       }
     ],
     district: "Gdańsk, Osowa"
-  },
-  {
-    coordinates: {
-      lat: 54.472222,
-      lng: 18.487638
     },
+    {
+      coordinates: {
+      lat: 54.472222,
+        lng: 18.487638
+      },
     units: [
       {
         number: 20,
         name: "20 NGDH \"Alahambra\""
-      },
-      {
+    },
+    {
         number: 50,
         name: "50 NGDH \"Wrzosiwo\""
       }
     ],
     district: "Gdynia, Karwiny"
-  },
-  {
-    coordinates: {
-      lat: 54.501820,
-      lng: 18.453005
     },
+    {
+      coordinates: {
+      lat: 54.501820,
+        lng: 18.453005
+      },
     units: [
       {
         number: 75,

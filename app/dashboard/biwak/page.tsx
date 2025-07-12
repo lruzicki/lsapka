@@ -23,6 +23,8 @@ export default function BiwakPage() {
   const { user } = useAuth()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false)
+  const [isGeneratingDOCX, setIsGeneratingDOCX] = useState(false)
 
   const [formData, setFormData] = useState({
     termin: '',
@@ -96,7 +98,7 @@ export default function BiwakPage() {
     }
   }
 
-  const handleGenerateCard = async () => {
+  const handleGenerateCard = async (format: 'pdf' | 'docx') => {
     // Validation
     const requiredFields = ['termin', 'miejsce', 'odjazd', 'przyjazd', 'maxOsob', 'druzyny', 'osobaOdpowiedzialna', 'opiekunowie', 'numeryKontaktowe', 'koszt'];
     const missingFields = requiredFields.filter(field => !formData[field as keyof typeof formData]);
@@ -106,8 +108,16 @@ export default function BiwakPage() {
       return;
     }
 
+    // Set loading state
+    if (format === 'pdf') {
+      setIsGeneratingPDF(true)
+    } else {
+      setIsGeneratingDOCX(true)
+    }
+
     try {
-      const response = await fetch('/api/biwak/generate-card', {
+      const endpoint = format === 'pdf' ? '/api/biwak/generate-card' : '/api/biwak/generate-docx';
+      const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -120,14 +130,21 @@ export default function BiwakPage() {
         const url = window.URL.createObjectURL(blob)
         const a = document.createElement('a')
         a.href = url
-        a.download = `biwak-${formData.termin}-${formData.miejsce}.pdf`
+        a.download = `biwak-${formData.termin}-${formData.miejsce}.${format}`
         document.body.appendChild(a)
         a.click()
         window.URL.revokeObjectURL(url)
         document.body.removeChild(a)
       }
     } catch (error) {
-      console.error('Error generating card:', error)
+      console.error(`Error generating ${format.toUpperCase()} card:`, error)
+    } finally {
+      // Reset loading state
+      if (format === 'pdf') {
+        setIsGeneratingPDF(false)
+      } else {
+        setIsGeneratingDOCX(false)
+      }
     }
   }
 
@@ -180,6 +197,7 @@ export default function BiwakPage() {
                     onChange={(e) => setFormData({ ...formData, miejsce: e.target.value })}
                     className="w-96 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[rgb(var(--primary))] focus:border-transparent"
                     placeholder="np. Las miejski, ul. Leśna 5"
+                    maxLength={200}
                   />
                 </div>
 
@@ -261,7 +279,7 @@ export default function BiwakPage() {
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     <User className="inline h-4 w-4 mr-1" />
-                    Osoba odpowiedzialna
+                    Komendant
                   </label>
                   <input
                     type="text"
@@ -270,8 +288,9 @@ export default function BiwakPage() {
                     onChange={(e) => setFormData({ ...formData, osobaOdpowiedzialna: e.target.value })}
                     className="w-96 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[rgb(var(--primary))] focus:border-transparent"
                     placeholder="stopień, imię, nazwisko, ksywka"
+                    maxLength={100}
                   />
-                  <p className="text-xs text-gray-500 mt-1">Zaleca się, aby osobą odpowiedzialną był członek zwyczajny Kręgu</p>
+                  <p className="text-xs text-gray-500 mt-1">Zaleca się, aby komendantem był członek zwyczajny Kręgu</p>
                 </div>
 
                 <div>
@@ -453,12 +472,40 @@ export default function BiwakPage() {
 
               <button
                 type="button"
-                onClick={handleGenerateCard}
-                disabled={!formData.termin || !formData.miejsce}
+                onClick={() => handleGenerateCard('pdf')}
+                disabled={!formData.termin || !formData.miejsce || isGeneratingPDF || isGeneratingDOCX}
                 className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white py-3 px-4 rounded-md transition-colors disabled:opacity-50"
               >
-                <Download className="h-4 w-4" />
-                Generuj kartę PDF
+                {isGeneratingPDF ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                    Generowanie PDF...
+                  </>
+                ) : (
+                  <>
+                    <Download className="h-4 w-4" />
+                    Generuj kartę PDF
+                  </>
+                )}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleGenerateCard('docx')}
+                disabled={!formData.termin || !formData.miejsce || isGeneratingPDF || isGeneratingDOCX}
+                className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white py-3 px-4 rounded-md transition-colors disabled:opacity-50"
+              >
+                {isGeneratingDOCX ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                    Generowanie DOCX...
+                  </>
+                ) : (
+                  <>
+                    <Download className="h-4 w-4" />
+                    Generuj kartę DOCX
+                  </>
+                )}
               </button>
             </div>
 

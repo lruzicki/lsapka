@@ -19,7 +19,6 @@ export async function POST(request: Request) {
       transportZgloszony, 
       transportOsob,
       koszt,
-      komendant,
       numeryKontaktowe,
       checklist,
       submittedBy,
@@ -42,7 +41,7 @@ export async function POST(request: Request) {
           <ul>
             <li><strong>Termin:</strong> ${termin}</li>
             <li><strong>Miejsce:</strong> ${miejsce}</li>
-            <li><strong>Osoba odpowiedzialna:</strong> ${osobaOdpowiedzialna}</li>
+                            <li><strong>Komendant:</strong> ${osobaOdpowiedzialna}</li>
             <li><strong>Drużyny:</strong> ${druzyny}</li>
             <li><strong>Maksymalna ilość osób:</strong> ${maxOsob}</li>
           </ul>
@@ -64,7 +63,7 @@ export async function POST(request: Request) {
           <p>${koszt}</p>
           
           <h3>Komendant biwaku:</h3>
-          <p>${komendant}</p>
+          <p>${osobaOdpowiedzialna}</p>
           
           <h3>Numery kontaktowe:</h3>
           <p>${numeryKontaktowe}</p>

@@ -108,8 +108,12 @@ export default function ContactSection() {
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[rgb(var(--primary))] focus:border-transparent"
                   placeholder="Jan Kowalski"
+                  maxLength={100}
                   required
                 />
+                <p className="text-xs text-gray-500 mt-1">
+                  {formData.name.length}/100 znaków
+                </p>
               </div>
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
@@ -136,8 +140,12 @@ export default function ContactSection() {
                   onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[rgb(var(--primary))] focus:border-transparent"
                   placeholder="Temat wiadomości"
+                  maxLength={200}
                   required
                 />
+                <p className="text-xs text-gray-500 mt-1">
+                  {formData.subject.length}/200 znaków
+                </p>
               </div>
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
@@ -150,8 +158,12 @@ export default function ContactSection() {
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[rgb(var(--primary))] focus:border-transparent"
                   placeholder="Treść wiadomości..."
+                  maxLength={2000}
                   required
                 ></textarea>
+                <p className="text-xs text-gray-500 mt-1">
+                  {formData.message.length}/2000 znaków
+                </p>
               </div>
               <div className="flex items-start">
                 <input type="checkbox" id="rodo" className="mt-1 mr-2" required />

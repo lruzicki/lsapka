@@ -93,9 +93,9 @@ export default function SettingsPage() {
                           className="mr-3"
                         />
                         <span>Włącz powiadomienia email</span>
-                      </label>
+                    </label>
                       <label className="flex items-center">
-                        <input
+                    <input
                           type="checkbox"
                           className="mr-3"
                         />

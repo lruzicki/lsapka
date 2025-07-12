@@ -17,9 +17,20 @@ export default function DashboardHeader() {
           <button className="md:hidden mr-2 p-2 rounded-md hover:bg-gray-100">
             <Menu className="h-6 w-6 text-gray-600" />
           </button>
-          <Link href="/" className="flex items-center gap-2">
-            <Image src="/logo.svg" alt="Logo" width={32} height={32} />
-            <span className="font-bold text-lg hidden sm:inline">Leśna Szkółka</span>
+          <Link href="/" className="flex items-center gap-3">
+            <div className="relative h-10 w-10">
+              <Image
+                src="/images/logo-lilijka.png"
+                alt="Logo Leśna Szkółka"
+                width={35}
+                height={35}
+                className="object-contain"
+              />
+            </div>
+            <div className="font-medium hidden sm:block">
+              <h1 className="text-sm">Niezależny Krąg Instruktorów</h1>
+              <h2 className="text-sm">Harcerskich „Leśna Szkółka"</h2>
+            </div>
           </Link>
         </div>
 

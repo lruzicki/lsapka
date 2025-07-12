@@ -32,7 +32,7 @@ export default function SupportSection() {
                   (lub program do rozliczeń zrobi to za Ciebie).
                 </li>
                 <li>
-                  <span className="font-medium">Dziękujemy!</span> - dziękujemy za wsparcie!
+                  <span className="font-medium">Dziękujemy!</span> - Twoje wsparcie jest dla nas ważne!
                 </li>
               </ol>
             </div>
