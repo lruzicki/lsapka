@@ -222,11 +222,27 @@ export async function POST(request: Request) {
       </html>
     `;
 
-    // Launch puppeteer
-    const browser = await puppeteer.launch({
+    // Launch puppeteer with environment-specific configuration
+    const isDocker = process.env.NODE_ENV === 'production';
+    
+    const browserOptions: any = {
       headless: true,
       args: ['--no-sandbox', '--disable-setuid-sandbox']
-    });
+    };
+
+    // Use system Chrome only in Docker environment
+    if (isDocker) {
+      browserOptions.executablePath = process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/chromium-browser';
+      browserOptions.args.push(
+        '--disable-dev-shm-usage',
+        '--disable-gpu',
+        '--no-first-run',
+        '--no-zygote',
+        '--single-process'
+      );
+    }
+
+    const browser = await puppeteer.launch(browserOptions);
 
     const page = await browser.newPage();
     
