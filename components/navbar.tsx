@@ -99,6 +99,17 @@ export default function Navbar() {
                   <Link href="#kontakt" className="hover:text-[rgb(var(--primary))] transition-colors">
                     Kontakt
                   </Link>
+                  <a 
+                    href="https://drive.google.com/drive/folders/1MUGEWg62jmqeqyNZQGyNL4xC9hCk1ge8?usp=sharing"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-[rgb(var(--primary))] transition-colors flex items-center gap-1"
+                  >
+                    Dokumenty
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
                   {/* <Link href="/zasiewy" className="hover:text-[rgb(var(--primary))] transition-colors">
                     Zasiewy
                   </Link> */}
@@ -188,6 +199,18 @@ export default function Navbar() {
               >
                 Kontakt
               </Link>
+              <a
+                href="https://drive.google.com/drive/folders/1MUGEWg62jmqeqyNZQGyNL4xC9hCk1ge8?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-[rgb(var(--primary))] transition-colors flex items-center gap-1"
+                onClick={() => setIsOpen(false)}
+              >
+                Dokumenty
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
               <Link
                 href="/zasiewy"
                 className="hover:text-[rgb(var(--primary))] transition-colors"

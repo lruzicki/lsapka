@@ -293,17 +293,17 @@ export default function ContactSection() {
 
               <div className="pt-6 border-t border-gray-200">
                 <h4 className="font-bold text-lg mb-4">Znajdź nas</h4>
-                <div className="flex space-x-4">
+                <div className="flex space-x-6">
                   <a
                     href="https://www.facebook.com/lesnaszkolka"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="h-10 w-10 bg-[rgba(var(--primary),0.1)] rounded-full flex items-center justify-center hover:bg-[rgb(var(--primary))] hover:text-white transition-colors"
+                    className="h-16 w-16 bg-[rgba(var(--primary),0.1)] rounded-full flex items-center justify-center hover:bg-[rgb(var(--primary))] hover:text-white transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-xl"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      width="20"
-                      height="20"
+                      width="28"
+                      height="28"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
@@ -319,12 +319,12 @@ export default function ContactSection() {
                     href="https://www.instagram.com/lesnaszkolka/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="h-10 w-10 bg-[rgba(var(--primary),0.1)] rounded-full flex items-center justify-center hover:bg-[rgb(var(--primary))] hover:text-white transition-colors"
+                    className="h-16 w-16 bg-[rgba(var(--primary),0.1)] rounded-full flex items-center justify-center hover:bg-[rgb(var(--primary))] hover:text-white transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-xl"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      width="20"
-                      height="20"
+                      width="28"
+                      height="28"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
@@ -342,12 +342,12 @@ export default function ContactSection() {
                     href="https://www.youtube.com/watch?v=lIESC0wmstQ"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="h-10 w-10 bg-[rgba(var(--primary),0.1)] rounded-full flex items-center justify-center hover:bg-[rgb(var(--primary))] hover:text-white transition-colors"
+                    className="h-16 w-16 bg-[rgba(var(--primary),0.1)] rounded-full flex items-center justify-center hover:bg-[rgb(var(--primary))] hover:text-white transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-xl"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      width="20"
-                      height="20"
+                      width="28"
+                      height="28"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"

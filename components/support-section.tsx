@@ -32,8 +32,7 @@ export default function SupportSection() {
                   (lub program do rozliczeń zrobi to za Ciebie).
                 </li>
                 <li>
-                  <span className="font-medium">Wyraź zgodę na przekazanie danych</span> - jeśli chcesz, możesz wyrazić
-                  zgodę na przekazanie nam swoich danych, dzięki czemu będziemy mogli Ci podziękować.
+                  <span className="font-medium">Dziękujemy!</span> - dziękujemy za wsparcie!
                 </li>
               </ol>
             </div>
@@ -45,15 +44,15 @@ export default function SupportSection() {
               <div className="bg-gray-50 p-6 rounded-lg w-full">
                 <h4 className="font-bold text-lg mb-4">Dane do przekazania 1,5%</h4>
                 <div className="space-y-2">
-                  <div className="grid grid-cols-[120px_1fr] items-center">
+                  <div className="grid grid-cols-[140px_1fr] items-center">
                     <span className="font-medium">Numer KRS:</span>
                     <span className="font-bold">0000111988</span>
                   </div>
-                  <div className="grid grid-cols-[120px_1fr] items-center">
+                  <div className="grid grid-cols-[140px_1fr] items-center">
                     <span className="font-medium">Nazwa:</span>
-                    <span>Niezależny Krąg Instruktorów Harcerskich „Leśna Szkółka"</span>
+                    <span>NKIH „Leśna Szkółka"</span>
                   </div>
-                  <div className="grid grid-cols-[120px_1fr] items-center">
+                  <div className="grid grid-cols-[140px_1fr] items-center">
                     <span className="font-medium">Cel szczegółowy:</span>
                     <span>Wsparcie działalności statutowej</span>
                   </div>
