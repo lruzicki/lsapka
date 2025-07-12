@@ -22,23 +22,10 @@ export default function Dashboard() {
             </div>
             <div>
               <p className="text-sm text-gray-500">Nadchodzące wydarzenia</p>
-              <p className="text-xl font-bold">3</p>
+              <p className="text-xl font-bold">...</p>
             </div>
           </div>
         </div>
-
-        <div className="bg-white rounded-lg shadow-sm p-6">
-          <div className="flex items-center">
-            <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
-              <Users className="h-6 w-6 text-green-600" />
-            </div>
-            <div>
-              <p className="text-sm text-gray-500">Aktywne drużyny</p>
-              <p className="text-xl font-bold">12</p>
-            </div>
-          </div>
-        </div>
-
         <div className="bg-white rounded-lg shadow-sm p-6">
           <div className="flex items-center">
             <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4">
@@ -46,7 +33,7 @@ export default function Dashboard() {
             </div>
             <div>
               <p className="text-sm text-gray-500">Dokumenty do przejrzenia</p>
-              <p className="text-xl font-bold">5</p>
+              <p className="text-xl font-bold">...</p>
             </div>
           </div>
         </div>
@@ -58,7 +45,7 @@ export default function Dashboard() {
             </div>
             <div>
               <p className="text-sm text-gray-500">Aktywność</p>
-              <p className="text-xl font-bold">+12%</p>
+              <p className="text-xl font-bold">...</p>
             </div>
           </div>
         </div>
@@ -66,7 +53,7 @@ export default function Dashboard() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 bg-white rounded-lg shadow-sm p-6">
-          <h2 className="text-lg font-bold mb-4">Kalendarz wydarzeń</h2>
+          <h2 className="text-lg font-bold mb-4">Kalendarz</h2>
           <div className="h-64 bg-gray-100 rounded-lg flex items-center justify-center">
             <p className="text-gray-500">Tutaj będzie kalendarz wydarzeń</p>
           </div>
@@ -76,15 +63,15 @@ export default function Dashboard() {
           <h2 className="text-lg font-bold mb-4">Szybkie akcje</h2>
           <div className="space-y-4">
             <Link
-              href="/dashboard/trips"
+              href="/dashboard/biwak"
               className="flex items-center p-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors"
             >
               <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
                 <Map className="h-5 w-5 text-blue-600" />
               </div>
               <div>
-                <p className="font-medium">Karta wyjazdowa</p>
-                <p className="text-sm text-gray-500">Utwórz nową kartę wyjazdową</p>
+                <p className="font-medium">Zgłoś biwak</p>
+                <p className="text-sm text-gray-500">Zgłoś biwak i wygeneruj kartę PDF</p>
               </div>
             </Link>
 

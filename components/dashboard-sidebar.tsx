@@ -7,11 +7,9 @@ import {
   Calendar,
   Map,
   FileText,
-  Users,
   Settings,
   Lightbulb,
   DollarSign,
-  ImageIcon,
   Home,
   Tent,
 } from "lucide-react"
@@ -46,11 +44,6 @@ export default function DashboardSidebar() {
       href: "/dashboard/documents",
     },
     {
-      title: "Drużyny",
-      icon: <Users className="h-5 w-5" />,
-      href: "/dashboard/teams",
-    },
-    {
       title: "Pomysły",
       icon: <Lightbulb className="h-5 w-5" />,
       href: "/dashboard/ideas",
@@ -59,11 +52,6 @@ export default function DashboardSidebar() {
       title: "Preliminarz",
       icon: <DollarSign className="h-5 w-5" />,
       href: "/dashboard/budget",
-    },
-    {
-      title: "Galeria",
-      icon: <ImageIcon className="h-5 w-5" />,
-      href: "/dashboard/gallery",
     },
     {
       title: "Ustawienia",

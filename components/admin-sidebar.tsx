@@ -44,17 +44,6 @@ export default function AdminSidebar({ currentView, setCurrentView }: AdminSideb
           </li>
           <li>
             <button
-              onClick={() => setCurrentView("teams")}
-              className={`w-full flex items-center px-6 py-3 text-left ${
-                currentView === "teams" ? "bg-[rgb(var(--primary))] text-white" : "text-gray-300 hover:bg-gray-800"
-              }`}
-            >
-              <Users className="mr-3 h-5 w-5" />
-              <span>Drużyny</span>
-            </button>
-          </li>
-          <li>
-            <button
               onClick={() => setCurrentView("documents")}
               className={`w-full flex items-center px-6 py-3 text-left ${
                 currentView === "documents" ? "bg-[rgb(var(--primary))] text-white" : "text-gray-300 hover:bg-gray-800"

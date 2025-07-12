@@ -9,7 +9,6 @@ export default function SectionsManager() {
     { id: "hero", name: "Strona główna (Hero)" },
     { id: "about", name: "O nas" },
     { id: "events", name: "Wydarzenia" },
-    { id: "teams", name: "Drużyny" },
     { id: "gallery", name: "Galeria" },
     { id: "history", name: "Historia" },
     { id: "authorities", name: "Władze" },
