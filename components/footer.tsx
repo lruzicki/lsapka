@@ -62,8 +62,13 @@ export default function Footer() {
             <h3 className="font-bold text-lg mb-4">Podstrony</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/zasiewy" className="text-gray-400 hover:text-white transition-colors">
+                {/* <Link href="/zasiewy" className="text-gray-400 hover:text-white transition-colors">
                   Zasiewy
+                </Link> */}
+              </li>
+              <li>
+                <Link href="https://ino.lesnaszkolka.org" target="_blank" className="text-gray-400 hover:text-white transition-colors">
+                  INO
                 </Link>
               </li>
             </ul>

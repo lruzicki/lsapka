@@ -62,9 +62,6 @@ export async function POST(request: Request) {
           <h3>Koszt:</h3>
           <p>${koszt}</p>
           
-          <h3>Komendant biwaku:</h3>
-          <p>${osobaOdpowiedzialna}</p>
-          
           <h3>Numery kontaktowe:</h3>
           <p>${numeryKontaktowe}</p>
 
