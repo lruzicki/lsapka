@@ -1,12 +1,15 @@
 export interface Unit {
+  number: number;
+  name: string;
+}
+
+export interface MapPin {
   coordinates: {
     lat: number;
     lng: number;
   };
-  unit: {
-    number: number;
-    name: string;
-  };
+  units: Unit[];
+  district: string;
 }
 
 export interface MapBounds {
@@ -31,96 +34,104 @@ export const mapBounds: MapBounds = {
   country: "Polska"
 };
 
-export const units: Unit[] = [
-    {
-      coordinates: {
-        lat: 54.47169444,  // 8 NGDH "Twierdza"
-        lng: 18.46097222
-      },
-      unit: {
+export const mapPins: MapPin[] = [
+  {
+    coordinates: {
+      lat: 54.47169444,
+      lng: 18.46097222
+    },
+    units: [
+      {
         number: 8,
         name: "8 NGDH \"Twierdza\""
-      }
-    },
-    {
-      coordinates: {
-        lat: 54.411560,     // Oliwa, SP 23 – ok. centrum Oliwy
-        lng: 18.555938
       },
-      unit: {
-        number: 2,
-        name: "2 NGDH \"Smoczyce\""
-      }
-    },
-    {
-      coordinates: {
-        lat: 54.5260,     // Wielki Kack, SP 20
-        lng: 18.4790
-      },
-      unit: {
-        number: 11,
-        name: "11 NGDH \"Sherwood\""
-      }
-    },
-    {
-      coordinates: {
-        lat: 54.5260,     // Wielki Kack, SP 20 (ta sama szkoła)
-        lng: 18.4790
-      },
-      unit: {
-        number: 25,
-        name: "25 NGDH \"Ogniwo\""
-      }
-    },
-    {
-      coordinates: {
-        lat: 54.430685,     // Osowa, SP 81
-        lng: 18.467231
-      },
-      unit: {
-        number: 13,
-        name: "13 NGDH \"Birmingham\""
-      }
-    },
-    {
-      coordinates: {
-        lat: 54.472222,     // Karwiny, SP 46
-        lng: 18.487638
-      },
-      unit: {
-        number: 20,
-        name: "20 NGDH \"Alahambra\""
-      }
-    },
-    {
-      coordinates: {
-        lat: 54.472222,    // Karwiny, SP 46 (ta sama lokalizacja)
-        lng: 18.488592
-      },
-      unit: {
-        number: 50,
-        name: "50 NGDH \"Wrzosiwo\""
-      }
-    },
-    {
-      coordinates: {
-        lat: 54.501820,   // Mistral – dokładnie podane
-        lng: 18.453005
-      },
-      unit: {
-        number: 75,
-        name: "75 NGDH \"Mistral\""
-      }
-    },
-    {
-      coordinates: {
-        lat: 54.471730, 
-        lng: 18.460227
-      },
-      unit: {
+      {
         number: 33,
         name: "33 NGZH \"Młodnik\""
       }
-    }
-  ];
+    ],
+    district: "Gdynia, Dąbrowa"
+  },
+  {
+    coordinates: {
+      lat: 54.411560,
+      lng: 18.555938
+    },
+    units: [
+      {
+        number: 2,
+        name: "2 NGDH \"Smoczyce\""
+      }
+    ],
+    district: "Gdańsk, Oliwa"
+  },
+  {
+    coordinates: {
+      lat: 54.464530,
+      lng: 18.496043
+    },
+    units: [
+      {
+        number: 11,
+        name: "11 NGDH \"Sherwood\""
+      },
+      {
+        number: 25,
+        name: "25 NGDH \"Ogniwo\""
+      }
+    ],
+    district: "Gdynia, Wielki Kack"
+  },
+  {
+    coordinates: {
+      lat: 54.430685,
+      lng: 18.467231
+    },
+    units: [
+      {
+        number: 13,
+        name: "13 NGDH \"Birmingham\""
+      }
+    ],
+    district: "Gdańsk, Osowa"
+  },
+  {
+    coordinates: {
+      lat: 54.472222,
+      lng: 18.487638
+    },
+    units: [
+      {
+        number: 20,
+        name: "20 NGDH \"Alahambra\""
+      },
+      {
+        number: 50,
+        name: "50 NGDH \"Wrzosiwo\""
+      }
+    ],
+    district: "Gdynia, Karwiny"
+  },
+  {
+    coordinates: {
+      lat: 54.501820,
+      lng: 18.453005
+    },
+    units: [
+      {
+        number: 75,
+        name: "75 NGDH \"Mistral\""
+      }
+    ],
+    district: "Gdynia, Chwarzno"
+  }
+];
+
+// Legacy export for backward compatibility
+export const units = mapPins.flatMap(pin => 
+  pin.units.map(unit => ({
+    coordinates: pin.coordinates,
+    unit: unit
+  }))
+);
   

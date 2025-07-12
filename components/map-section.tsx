@@ -1,12 +1,24 @@
 "use client"
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import L from 'leaflet'
-import { units, mapBounds } from '@/lib/map-data'
+import { mapPins, mapBounds } from '@/lib/map-data'
 import 'leaflet/dist/leaflet.css'
 
 export default function MapSection() {
   const mapRef = useRef<L.Map | null>(null)
+  const [selectedPin, setSelectedPin] = useState<number | null>(null)
+
+  const centerOnPin = (pinIndex: number) => {
+    if (mapRef.current) {
+      const pin = mapPins[pinIndex]
+      mapRef.current.setView([pin.coordinates.lat, pin.coordinates.lng], 15)
+      setSelectedPin(pinIndex)
+      
+      // Reset selection after 2 seconds
+      setTimeout(() => setSelectedPin(null), 2000)
+    }
+  }
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -35,19 +47,27 @@ export default function MapSection() {
         const customIcon = L.icon({
           iconUrl: '/images/marker-icon.png',
           iconRetinaUrl: '/images/marker-icon-2x.png',
-          iconSize: [25, 25], // Zmniejszony rozmiar z 256x256
-          iconAnchor: [12, 12], // Punkt zaczepienia (połowa rozmiaru)
-          popupAnchor: [0, -12], // Punkt gdzie pojawia się popup (nad markerem)
+          iconSize: [25, 25],
+          iconAnchor: [12, 12],
+          popupAnchor: [0, -12],
         })
 
-        // Add markers for each unit
-        units.forEach(unit => {
+        // Add markers for each pin
+        mapPins.forEach((pin, index) => {
+          const unitsList = pin.units.map(unit => unit.name).join('<br>')
+          const popupContent = `
+            <div style="text-align: center;">
+              <strong>${pin.district}</strong><br>
+              ${unitsList}
+            </div>
+          `
+          
           const marker = L.marker(
-            [unit.coordinates.lat, unit.coordinates.lng],
+            [pin.coordinates.lat, pin.coordinates.lng],
             { icon: customIcon }
           )
             .addTo(mapRef.current!)
-            .bindPopup(`<b>${unit.unit.name}</b>`)
+            .bindPopup(popupContent)
         })
 
         // Set map bounds
@@ -83,14 +103,37 @@ export default function MapSection() {
           <div className="p-8">
             <h3 className="text-xl font-bold mb-6">Nasze lokalizacje</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {units.map((unit, index) => (
-                <div key={unit.unit.number} className="flex items-start">
-                  <div className="h-10 w-10 rounded-full bg-[rgb(var(--primary))] flex items-center justify-center flex-shrink-0 mr-4">
-                    <span className="text-white font-bold">{unit.unit.number}</span>
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-lg">{unit.unit.name}</h4>
-                  </div>
+              {mapPins.map((pin, pinIndex) => (
+                <div key={pinIndex} className="space-y-3">
+                  <div className="text-sm font-medium text-gray-600">{pin.district}</div>
+                  {pin.units.map((unit) => (
+                    <div 
+                      key={unit.number} 
+                      className={`flex items-start cursor-pointer transition-all duration-200 ${
+                        selectedPin === pinIndex ? 'scale-105' : 'hover:scale-102'
+                      }`}
+                      onClick={() => centerOnPin(pinIndex)}
+                    >
+                      <div className={`h-10 w-10 rounded-full flex items-center justify-center flex-shrink-0 mr-4 transition-colors ${
+                        selectedPin === pinIndex 
+                          ? 'bg-[rgb(var(--primary))] shadow-lg' 
+                          : 'bg-gray-300 hover:bg-[rgb(var(--primary))]'
+                      }`}>
+                        <span className={`font-bold transition-colors ${
+                          selectedPin === pinIndex ? 'text-white' : 'text-gray-700'
+                        }`}>
+                          {unit.number}
+                        </span>
+                      </div>
+                      <div>
+                        <h4 className={`font-bold text-lg transition-colors ${
+                          selectedPin === pinIndex ? 'text-[rgb(var(--primary))]' : 'text-gray-900'
+                        }`}>
+                          {unit.name}
+                        </h4>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               ))}
             </div>
