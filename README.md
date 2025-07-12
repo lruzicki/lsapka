@@ -34,3 +34,11 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## SSL 
+
+Get SSL certificate and update your local nginx:
+sudo certbot --nginx -d test.lesnaszkolka.org
+
+Then I assume you want to turn off virtual machine's nginx, kill all the process on 80 nad 443 port. Then use this in docker-compose.yml volume and open port 80 and 443.
+
