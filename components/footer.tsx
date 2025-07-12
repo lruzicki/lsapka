@@ -9,7 +9,13 @@ export default function Footer() {
           <div>
             <div className="flex items-center gap-3 mb-4">
               <div className="relative h-10 w-10">
-                <Image src="/logo.svg" alt="Logo Leśna Szkółka" fill className="object-contain invert" />
+                <Image
+                  src="/images/logo-lilijka.png"
+                  alt="Logo Leśna Szkółka"
+                  width={35}
+                  height={35}
+                  className="object-contain"
+                />
               </div>
               <div className="font-medium">
                 <h3 className="text-sm">Niezależny Krąg Instruktorów</h3>
@@ -60,26 +66,6 @@ export default function Footer() {
                   Zasiewy
                 </Link>
               </li>
-              <li>
-                <Link href="/historia" className="text-gray-400 hover:text-white transition-colors">
-                  Historia
-                </Link>
-              </li>
-              <li>
-                <Link href="/wladze" className="text-gray-400 hover:text-white transition-colors">
-                  Władze
-                </Link>
-              </li>
-              <li>
-                <Link href="/dokumenty" className="text-gray-400 hover:text-white transition-colors">
-                  Dokumenty
-                </Link>
-              </li>
-              <li>
-                <Link href="/login" className="text-gray-400 hover:text-white transition-colors">
-                  Strefa instruktora
-                </Link>
-              </li>
             </ul>
           </div>
 
@@ -119,7 +105,7 @@ export default function Footer() {
                 >
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
                 </svg>
-                <span className="text-gray-400">+48 123 456 789</span>
+                <span className="text-gray-400">Nie mamy numeru telefonu</span>
               </li>
               <li className="flex items-center">
                 <svg
@@ -137,7 +123,7 @@ export default function Footer() {
                   <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
                   <circle cx="12" cy="10" r="3" />
                 </svg>
-                <span className="text-gray-400">ul. Harcerska 12, 00-001 Warszawa</span>
+                <span className="text-gray-400">ul. Stryjska 24, 81-506 Gdynia</span>
               </li>
             </ul>
           </div>

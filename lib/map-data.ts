@@ -78,6 +78,10 @@ export const mapPins: MapPin[] = [
       {
         number: 25,
         name: "25 NGDH \"Ogniwo\""
+      },
+      {
+        number: 6,
+        name: "6 GGZ \"Floar\""
       }
     ],
     district: "Gdynia, Wielki Kack"
