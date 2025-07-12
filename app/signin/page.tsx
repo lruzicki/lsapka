@@ -1,20 +1,16 @@
 "use client"
 
-import { useAuth } from "@/context/auth-context"
-import { useEffect } from "react"
+import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
 
-export default function LoginPage() {
-  const { login, isAuthenticated } = useAuth()
+export default function SignInPage() {
   const router = useRouter()
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      router.push("/dashboard")
-    }
-  }, [isAuthenticated, router])
+  const handleSignIn = () => {
+    signIn("azure-ad", { callbackUrl: "/dashboard" })
+  }
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -31,7 +27,7 @@ export default function LoginPage() {
           <div className="bg-white rounded-lg shadow-md p-8">
             <div className="space-y-6">
               <button
-                onClick={login}
+                onClick={handleSignIn}
                 className="w-full flex items-center justify-center gap-3 bg-[#0078d4] text-white py-3 px-4 rounded-md hover:bg-[#106ebe] transition-colors"
               >
                 <svg
@@ -54,22 +50,14 @@ export default function LoginPage() {
                 Zaloguj przez Microsoft 365
               </button>
 
-              <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray-300"></div>
-                </div>
-                <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-white text-gray-500">lub</span>
-                </div>
+              <div className="text-center">
+                <button
+                  onClick={() => router.push("/")}
+                  className="text-gray-500 hover:text-gray-700 transition-colors"
+                >
+                  ← Wróć do strony głównej
+                </button>
               </div>
-
-              {/* Mock logowania - w rzeczywistości tutaj byłby formularz */}
-              <button
-                onClick={login}
-                className="w-full bg-[rgb(var(--primary))] text-white py-3 px-4 rounded-md hover:bg-[rgb(var(--primary-dark))] transition-colors"
-              >
-                Zaloguj się (mock)
-              </button>
             </div>
 
             <div className="mt-6 text-center text-sm text-gray-600">
@@ -89,4 +77,4 @@ export default function LoginPage() {
       </footer>
     </div>
   )
-}
+} 

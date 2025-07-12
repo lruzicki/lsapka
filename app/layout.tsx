@@ -2,7 +2,7 @@ import type React from "react"
 import type { Metadata } from "next/dist/lib/metadata/types/metadata-interface"
 import { Montserrat } from "next/font/google"
 import "./globals.css"
-import { AuthProvider } from "@/context/auth-context"
+import { Providers } from "@/components/providers"
 
 const montserrat = Montserrat({ subsets: ["latin", "latin-ext"] })
 
@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="pl" className="scroll-smooth">
       <body className={montserrat.className}>
-        <AuthProvider>{children}</AuthProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   )

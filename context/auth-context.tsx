@@ -2,6 +2,7 @@
 
 import { createContext, useState, useContext, useEffect, type ReactNode } from "react"
 import { useRouter, usePathname } from "next/navigation"
+import { useSession, signOut } from "next-auth/react"
 
 interface User {
   id: string
@@ -21,50 +22,40 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null)
+  const { data: session, status } = useSession()
   const [isLoading, setIsLoading] = useState(true)
   const router = useRouter()
   const pathname = usePathname()
 
-  // Sprawdź, czy użytkownik jest zalogowany przy ładowaniu strony
+  // Konwertuj sesję NextAuth na nasz format użytkownika
+  const user = session?.user ? {
+    id: session.user.email || "",
+    name: session.user.name || "",
+    email: session.user.email || "",
+    role: "instructor", // domyślna rola
+  } : null
+
   useEffect(() => {
-    const storedUser = localStorage.getItem("user")
-    if (storedUser) {
-      setUser(JSON.parse(storedUser))
-    }
-    setIsLoading(false)
+    setIsLoading(status === "loading")
 
     // Przekieruj do dashboardu, jeśli użytkownik jest zalogowany i próbuje wejść na stronę logowania
-    if (storedUser && pathname === "/login") {
+    if (session && pathname === "/login") {
       router.push("/dashboard")
     }
 
-    // Przekieruj do logowania, jeśli użytkownik nie jest zalogowany i próbuje wejść na dashboard
-    if (!storedUser && pathname?.startsWith("/dashboard")) {
-      router.push("/login")
+    // Przekieruj do strony głównej, jeśli użytkownik nie jest zalogowany i próbuje wejść na dashboard
+    if (!session && status === "unauthenticated" && pathname?.startsWith("/dashboard")) {
+      router.push("/")
     }
-  }, [pathname, router])
+  }, [session, status, pathname, router])
 
-  // Mock funkcji logowania
   const login = () => {
-    // Symulacja logowania przez Microsoft 365
-    const mockUser = {
-      id: "1",
-      name: "Jan Kowalski",
-      email: "jan.kowalski@lesnaszkolka.pl",
-      role: "instructor",
-    }
-
-    setUser(mockUser)
-    localStorage.setItem("user", JSON.stringify(mockUser))
-    router.push("/dashboard")
+    window.location.href = "/signin"
   }
 
   // Funkcja wylogowania
   const logout = () => {
-    setUser(null)
-    localStorage.removeItem("user")
-    router.push("/")
+    signOut({ callbackUrl: "/" })
   }
 
   return (

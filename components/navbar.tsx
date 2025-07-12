@@ -108,8 +108,14 @@ export default function Navbar() {
                   >
                     Przekaż 1,5%
                   </Link>
-                  {/* <Link
-                    href="/login"
+                  <button
+                    onClick={() => {
+                      if (isAuthenticated) {
+                        window.location.href = "/dashboard"
+                      } else {
+                        window.location.href = "/signin"
+                      }
+                    }}
                     className={`flex items-center gap-2 px-4 py-2 rounded-md transition-colors ${
                       scrolled
                         ? "bg-[rgb(var(--primary))] text-white"
@@ -117,8 +123,8 @@ export default function Navbar() {
                     }`}
                   >
                     <LogIn size={18} />
-                    <span>Login</span>
-                  </Link> */}
+                    <span>{isAuthenticated ? "Dashboard" : "Login"}</span>
+                  </button>
                 </nav>
               </>
             )}
@@ -189,14 +195,20 @@ export default function Navbar() {
               >
                 Zasiewy
               </Link>
-              <Link
-                href="/login"
+              <button
+                onClick={() => {
+                  setIsOpen(false)
+                  if (isAuthenticated) {
+                    window.location.href = "/dashboard"
+                  } else {
+                    window.location.href = "/signin"
+                  }
+                }}
                 className="bg-[rgb(var(--primary))] hover:bg-[rgb(var(--primary-dark))] text-white px-6 py-3 rounded-md transition-colors flex items-center gap-2"
-                onClick={() => setIsOpen(false)}
               >
                 <LogIn size={18} />
                 <span>{isAuthenticated ? "Dashboard" : "Zaloguj się"}</span>
-              </Link>
+              </button>
             </div>
           </div>
         </div>
