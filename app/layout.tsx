@@ -7,8 +7,16 @@ import { Providers } from "@/components/providers"
 const montserrat = Montserrat({ subsets: ["latin", "latin-ext"] })
 
 export const metadata: Metadata = {
-  title: 'Niezależny Krąg Instruktorów Harcerskich „Leśna Szkółka"',
+  title: 'NKIH "Leśna Szkółka"',
   description: "Strona organizacji harcerskiej Leśna Szkółka",
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/images/logo-lilijka.png', type: 'image/png' },
+    ],
+    shortcut: '/images/logo-lilijka.png',
+    apple: '/images/logo-lilijka.png',
+  },
 }
 
 export default function RootLayout({
