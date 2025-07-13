@@ -107,7 +107,7 @@ export const mapPins: MapPin[] = [
     units: [
       {
         number: 20,
-        name: "20 NGDH \"Alahambra\""
+        name: "20 NGDH \"Alhambra\""
     },
     {
         number: 50,
