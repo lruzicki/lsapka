@@ -1,6 +1,58 @@
+"use client"
+
 import Link from "next/link"
+import { useState, useEffect } from "react"
+import { Calendar, MapPin, Wallet } from "lucide-react"
+
+interface Wyjazd {
+  id: number
+  tytul: string
+  opis: string
+  miejsce: string
+  data_rozpoczecia: string
+  data_zakonczenia: string
+  kwota: number
+}
 
 export default function EventsSection() {
+  const [wyjazdy, setWyjazdy] = useState<Wyjazd[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetchWyjazdy()
+  }, [])
+
+  const fetchWyjazdy = async () => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001'}/wyjazdy/upcoming`)
+      if (response.ok) {
+        const data = await response.json()
+        setWyjazdy(data)
+      }
+    } catch (error) {
+      console.error('Błąd podczas pobierania wyjazdów:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString)
+    return date.toLocaleDateString('pl-PL', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    })
+  }
+
+  const formatDateShort = (dateString: string) => {
+    const date = new Date(dateString)
+    return {
+      day: date.getDate(),
+      month: date.toLocaleDateString('pl-PL', { month: 'short' })
+    }
+  }
+
   return (
     <section id="wydarzenia" className="section-padding">
       <div className="container mx-auto px-4">
@@ -13,25 +65,33 @@ export default function EventsSection() {
           </p>
         </div>
 
+        {loading ? (
+          <div className="flex items-center justify-center h-32">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[rgb(var(--primary))]"></div>
+          </div>
+        ) : wyjazdy.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="bg-white p-8 rounded-lg shadow-sm border border-gray-100">
             <h3 className="text-2xl font-bold mb-6 text-[rgb(var(--primary))]">Kalendarz</h3>
             <div className="space-y-6">
-              <div className="flex">
+                {wyjazdy.slice(0, 3).map((wyjazd) => {
+                  const dateInfo = formatDateShort(wyjazd.data_rozpoczecia)
+                  return (
+                    <div key={wyjazd.id} className="flex">
                 <div className="flex-shrink-0 w-16 h-16 bg-[rgba(var(--primary),0.1)] rounded-lg flex flex-col items-center justify-center mr-4">
-                  <span className="font-bold text-[rgb(var(--primary))]">6</span>
-                  <span className="text-sm text-gray-600">Sie</span>
+                        <span className="font-bold text-[rgb(var(--primary))]">{dateInfo.day}</span>
+                        <span className="text-sm text-gray-600">{dateInfo.month}</span>
                 </div>
                 <div>
-                  <h4 className="font-bold text-lg">Obóz letni</h4>
-                  <p className="text-gray-600">6-21 sierpnia 2025, Jezioro Strupino</p>
+                        <h4 className="font-bold text-lg">{wyjazd.tytul}</h4>
+                        <p className="text-gray-600">{formatDate(wyjazd.data_rozpoczecia)} - {formatDate(wyjazd.data_zakonczenia)}, {wyjazd.miejsce}</p>
+                      </div>
                 </div>
-              </div>
+                  )
+                })}
             </div>
             <Link
-              href="https://www.facebook.com/lesnaszkolka"
-              target="_blank"
-              rel="noopener noreferrer"
+                href="/dashboard/wyjazdy"
               className="inline-block mt-8 text-[rgb(var(--primary))] font-medium hover:underline"
             >
               Zobacz pełen kalendarz →
@@ -40,85 +100,45 @@ export default function EventsSection() {
 
           <div className="bg-white p-8 rounded-lg shadow-sm border border-gray-100">
             <h3 className="text-2xl font-bold mb-6 text-[rgb(var(--primary))]">Najbliższe wydarzenie</h3>
-            <h4 className="font-bold text-xl mb-4">Obóz letni</h4>
-            <p className="text-gray-700 mb-6">
-              Zapraszamy wszystkich harcerzy na obóz letni, który odbędzie się w dniach 6-21 sierpnia 2025 roku nad jeziorem Strupino.
-            </p>
+              {wyjazdy[0] && (
+                <>
+                  <h4 className="font-bold text-xl mb-4">{wyjazdy[0].tytul}</h4>
+                  {wyjazdy[0].opis && (
+                    <p className="text-gray-700 mb-6">{wyjazdy[0].opis}</p>
+                  )}
             <div className="space-y-3 mb-6">
               <div className="flex items-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="rgb(var(--primary))"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="lucide lucide-map-pin mr-3"
-                >
-                  <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-                  <circle cx="12" cy="10" r="3" />
-                </svg>
-                <span>Miejsce obozowe nad jeziorem Strupino województwo pomorskie, powiat kościerski, gmina Kościerzyna</span>
+                      <MapPin className="h-5 w-5 mr-3 text-[rgb(var(--primary))]" />
+                      <span>{wyjazdy[0].miejsce}</span>
               </div>
               <div className="flex items-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="rgb(var(--primary))"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="lucide lucide-calendar-days mr-3"
-                >
-                  <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
-                  <line x1="16" x2="16" y1="2" y2="6" />
-                  <line x1="8" x2="8" y1="2" y2="6" />
-                  <line x1="3" x2="21" y1="10" y2="10" />
-                  <path d="M8 14h.01" />
-                  <path d="M12 14h.01" />
-                  <path d="M16 14h.01" />
-                  <path d="M8 18h.01" />
-                  <path d="M12 18h.01" />
-                  <path d="M16 18h.01" />
-                </svg>
-                <span>6-21 sierpnia 2025</span>
+                      <Calendar className="h-5 w-5 mr-3 text-[rgb(var(--primary))]" />
+                      <span>{formatDate(wyjazdy[0].data_rozpoczecia)} - {formatDate(wyjazdy[0].data_zakonczenia)}</span>
               </div>
+                    {wyjazdy[0].kwota > 0 && (
               <div className="flex items-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="rgb(var(--primary))"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="lucide lucide-wallet mr-3"
-                >
-                  <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4" />
-                  <path d="M3 5v14a2 2 0 0 0 2 2h16v-5" />
-                  <path d="M18 12a2 2 0 0 0 0 4h4v-4Z" />
-                </svg>
-                <span>Koszt: 1750 zł</span>
+                        <Wallet className="h-5 w-5 mr-3 text-[rgb(var(--primary))]" />
+                        <span>Koszt: {wyjazdy[0].kwota} zł</span>
               </div>
+                    )}
             </div>
             <Link
-              href="https://www.facebook.com/lesnaszkolka"
-              target="_blank"
-              rel="noopener noreferrer"
+                    href="/dashboard/wyjazdy"
               className="inline-block bg-[rgb(var(--primary))] hover:bg-[rgb(var(--primary-dark))] text-white px-6 py-3 rounded-md transition-colors"
             >
               Szczegóły i zapisy
             </Link>
+                </>
+              )}
+            </div>
           </div>
+        ) : (
+          <div className="text-center py-12">
+            <Calendar className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+            <h3 className="text-xl font-medium text-gray-900 mb-2">Brak zaplanowanych wydarzeń</h3>
+            <p className="text-gray-600">Sprawdź ponownie wkrótce lub skontaktuj się z nami, aby dowiedzieć się więcej o nadchodzących wydarzeniach.</p>
         </div>
+        )}
       </div>
     </section>
   )

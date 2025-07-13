@@ -1,4 +1,57 @@
+"use client"
+
+import { useState, useEffect } from "react"
+import { Users, Shield, FileText } from "lucide-react"
+import Link from "next/link"
+
+interface Komenda {
+  id: number
+  stopien: string
+  imie: string
+  nazwisko: string
+  ksywka: string
+}
+
+interface KomisjaRewizyjna {
+  id: number
+  stopien: string
+  imie: string
+  nazwisko: string
+  ksywka: string
+}
+
 export default function AboutSection() {
+  const [komenda, setKomenda] = useState<Komenda[]>([])
+  const [komisja, setKomisja] = useState<KomisjaRewizyjna[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+  const fetchData = async () => {
+    try {
+      const [komendaResponse, komisjaResponse] = await Promise.all([
+        fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001'}/komenda`),
+        fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001'}/komisja-rewizyjna`)
+      ])
+
+      if (komendaResponse.ok) {
+        const komendaData = await komendaResponse.json()
+        setKomenda(komendaData)
+      }
+
+      if (komisjaResponse.ok) {
+        const komisjaData = await komisjaResponse.json()
+        setKomisja(komisjaData)
+      }
+    } catch (error) {
+      console.error('Błąd podczas pobierania danych:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <section id="o-nas" className="section-padding bg-gray-50">
       <div className="container mx-auto px-4">
@@ -15,7 +68,7 @@ export default function AboutSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
           <div className="bg-white p-8 rounded-lg shadow-sm text-center">
             <div className="w-16 h-16 bg-[rgba(var(--primary),0.1)] rounded-full flex items-center justify-center mx-auto mb-6">
               <svg
@@ -94,6 +147,80 @@ export default function AboutSection() {
               symboli narodowych i bohaterów.
             </p>
           </div>
+        </div>
+
+        {/* Komenda i Komisja Rewizyjna */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+          <div className="bg-white p-8 rounded-lg shadow-sm">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-12 h-12 bg-[rgba(var(--primary),0.1)] rounded-full flex items-center justify-center">
+                <Users className="h-6 w-6 text-[rgb(var(--primary))]" />
+              </div>
+              <h3 className="text-2xl font-bold">Komenda</h3>
+            </div>
+            {loading ? (
+              <div className="flex items-center justify-center h-32">
+                <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[rgb(var(--primary))]"></div>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {komenda.map((member) => (
+                  <div key={member.id} className="border-l-4 border-[rgb(var(--primary))] pl-4">
+                    <h4 className="font-bold text-lg">
+                      {member.stopien}. {member.imie} {member.nazwisko}
+                      {member.ksywka && (
+                        <span className="text-gray-600 font-normal"> "{member.ksywka}"</span>
+                      )}
+                    </h4>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className="bg-white p-8 rounded-lg shadow-sm">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-12 h-12 bg-[rgba(var(--primary),0.1)] rounded-full flex items-center justify-center">
+                <Shield className="h-6 w-6 text-[rgb(var(--primary))]" />
+              </div>
+              <h3 className="text-2xl font-bold">Komisja Rewizyjna</h3>
+            </div>
+            {loading ? (
+              <div className="flex items-center justify-center h-32">
+                <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[rgb(var(--primary))]"></div>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {komisja.map((member) => (
+                  <div key={member.id} className="border-l-4 border-[rgb(var(--primary))] pl-4">
+                    <h4 className="font-bold text-lg">
+                      {member.stopien}. {member.imie} {member.nazwisko}
+                      {member.ksywka && (
+                        <span className="text-gray-600 font-normal"> "{member.ksywka}"</span>
+                      )}
+                    </h4>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Informacja o dokumentach */}
+        <div className="bg-white p-6 rounded-lg shadow-sm text-center">
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <FileText className="h-8 w-8 text-[rgb(var(--primary))]" />
+            <h3 className="text-xl font-bold">Więcej informacji</h3>
+          </div>
+          <p className="text-gray-600 mb-4">
+            Statut, regulaminy i wszystkie dokumenty dostępne w zakładce "Dokumenty".
+          </p>
+          <Link
+            href="#dokumenty"
+            className="inline-block bg-[rgb(var(--primary))] hover:bg-[rgb(var(--primary-dark))] text-white px-6 py-3 rounded-md transition-colors"
+          >
+            Zobacz dokumenty
+          </Link>
         </div>
       </div>
     </section>

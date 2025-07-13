@@ -1,7 +1,7 @@
 "use client"
 
 import { useAuth } from "@/context/auth-context"
-import { Calendar, Users, FileText, Map, BarChart3 } from "lucide-react"
+import { Calendar, Users, Map, BarChart3 } from "lucide-react"
 import Link from "next/link"
 
 export default function Dashboard() {
@@ -14,7 +14,7 @@ export default function Dashboard() {
         <p className="text-gray-600">Panel instruktora Leśnej Szkółki</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         <div className="bg-white rounded-lg shadow-sm p-6">
           <div className="flex items-center">
             <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
@@ -26,17 +26,7 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-        <div className="bg-white rounded-lg shadow-sm p-6">
-          <div className="flex items-center">
-            <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4">
-              <FileText className="h-6 w-6 text-purple-600" />
-            </div>
-            <div>
-              <p className="text-sm text-gray-500">Dokumenty do przejrzenia</p>
-              <p className="text-xl font-bold">...</p>
-            </div>
-          </div>
-        </div>
+
 
         <div className="bg-white rounded-lg shadow-sm p-6">
           <div className="flex items-center">

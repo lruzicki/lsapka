@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15
+    container_name: ls_web_postgres
+    environment:
+      POSTGRES_DB: ino_db
+      POSTGRES_USER: ino_user
+      POSTGRES_PASSWORD: ino_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - ls_web_network
+    restart: unless-stopped
+
+  # FastAPI Backend (ls-web)
+  ls_web_api:
+    build: ./backend
+    container_name: ls_web_api
+    ports:
+      - "8001:8001"
+    environment:
+      DATABASE_URL: postgresql://ino_user:ino_password@postgres:5432/ino_db
+    depends_on:
+      - postgres
+    networks:
+      - ls_web_network
+    volumes:
+      - ./backend:/app
+    command: uvicorn main:app --host 0.0.0.0 --port 8001 --reload
+    env_file:
+      - ./backend/.env
+    restart: unless-stopped
+
+  # Next.js Frontend (ls-web)
+  ls_web:
+    build: .
+    container_name: ls_web_frontend
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.local
+    environment:
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET:-default_secret_change_me}
+      API_BASE_URL: http://localhost:8001
+      PORT: 3000
+    depends_on:
+      - ls_web_api
+    networks:
+      - ls_web_network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  ls_web_network:
+    driver: bridge 

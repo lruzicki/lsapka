@@ -12,6 +12,7 @@ import {
   DollarSign,
   Home,
   Tent,
+  Users,
 } from "lucide-react"
 
 export default function DashboardSidebar() {
@@ -22,6 +23,16 @@ export default function DashboardSidebar() {
       title: "Dashboard",
       icon: <LayoutDashboard className="h-5 w-5" />,
       href: "/dashboard",
+    },
+    {
+      title: "Drużyny",
+      icon: <Users className="h-5 w-5" />,
+      href: "/dashboard/druzyny",
+    },
+    {
+      title: "Wyjazdy",
+      icon: <Map className="h-5 w-5" />,
+      href: "/dashboard/wyjazdy",
     },
     {
       title: "Kalendarz",
