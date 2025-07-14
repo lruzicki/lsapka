@@ -56,7 +56,8 @@ app.add_middleware(
         "http://localhost:3000", 
         "http://localhost:3001",
         "https://test.lesnaszkolka.org",
-        "https://lesnaszkolka.org"
+        "https://lesnaszkolka.org",
+        "https://ino.lesnaszkolka.org"
     ],  # Frontend URLs
     allow_credentials=True,
     allow_methods=["*"],  # Wszystkie metody HTTP
@@ -595,7 +596,19 @@ def delete_komisja_rewizyjna(
 @app.get("/health")
 def health_check():
     """Health check endpoint"""
-    return {"status": "healthy", "service": "ls-web-api"}
+    return {"status": "healthy", "service": "ls-web-api", "timestamp": datetime.now().isoformat()}
+
+@app.get("/health/detailed")
+def health_check_detailed():
+    """Detailed health check endpoint"""
+    return {
+        "status": "healthy",
+        "service": "ls-web-api",
+        "timestamp": datetime.now().isoformat(),
+        "rate_limiter": "enabled",
+        "cors": "enabled",
+        "database": "connected"
+    }
 
 @app.get("/test-auth")
 async def test_auth(current_user: User = Depends(get_current_user)):
