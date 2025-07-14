@@ -100,7 +100,7 @@ export default function Navbar() {
                     Kontakt
                   </Link>
                   <a 
-                    href="https://drive.google.com/drive/folders/1MUGEWg62jmqeqyNZQGyNL4xC9hCk1ge8?usp=sharing"
+                    href="https://nkihlesnaszkolka.sharepoint.com/:f:/s/NKIHLS-dokumentypubliczne/ErDdWMWDSFlDmXxJayyzJMsBkeRIuZovo3a6dhdwezUh2w?e=9VTkpQ"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hover:text-[rgb(var(--primary))] transition-colors flex items-center gap-1"
@@ -200,7 +200,7 @@ export default function Navbar() {
                 Kontakt
               </Link>
               <a
-                href="https://drive.google.com/drive/folders/1MUGEWg62jmqeqyNZQGyNL4xC9hCk1ge8?usp=sharing"
+                href="https://nkihlesnaszkolka.sharepoint.com/:f:/s/NKIHLS-dokumentypubliczne/ErDdWMWDSFlDmXxJayyzJMsBkeRIuZovo3a6dhdwezUh2w?e=9VTkpQ"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-[rgb(var(--primary))] transition-colors flex items-center gap-1"

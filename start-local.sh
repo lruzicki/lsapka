@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "🚀 Uruchamianie ls-web w trybie lokalnym..."
+echo "🚀 Uruchamianie lsapka w trybie lokalnym..."
 
 # Sprawdź czy pliki .env istnieją
 if [ ! -f ".env.local" ]; then
@@ -40,7 +40,7 @@ echo "📊 Status kontenerów:"
 docker compose -f docker-compose.local.yml ps
 
 echo ""
-echo "✅ ls-web uruchomiony!"
+echo "✅ lsapka uruchomiony!"
 echo "🌐 Frontend: http://localhost:3000"
 echo "🔌 Backend API: http://localhost:8001"
 echo "🗄️  Baza danych: localhost:5432"

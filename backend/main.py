@@ -1,8 +1,11 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from typing import List, Dict
 from datetime import datetime
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
 
 # Importy z naszych warstw
 from infrastructure.database import get_db, create_tables
@@ -32,12 +35,19 @@ from infrastructure.auth_service import AzureAuthService
 from middleware.auth_middleware import get_current_user, require_roles, require_admin
 from domain.user import User
 
+# Inicjalizacja rate limitera
+limiter = Limiter(key_func=get_remote_address)
+
 # Tworzenie aplikacji FastAPI
 app = FastAPI(
     title="LS Web API",
     description="API dla systemu Leśna Szkołka",
     version="1.0.0"
 )
+
+# Dodanie rate limitera do aplikacji
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # Konfiguracja CORS
 app.add_middleware(
@@ -138,7 +148,9 @@ async def get_current_user_info(current_user: User = Depends(get_current_user)):
 
 # Endpointy dla drużyn
 @app.post("/druzyny", response_model=DruzynaResponse)
+@limiter.limit("60/minute")
 async def create_druzyna(
+    request: Request,
     druzyna_data: DruzynaCreate,
     druzyna_service: DruzynaService = Depends(get_druzyna_service),
     current_user: User = Depends(get_current_user)
@@ -202,7 +214,9 @@ def list_druzyny_by_pinezka(
     return result
 
 @app.put("/druzyny/{druzyna_id}", response_model=DruzynaResponse)
+@limiter.limit("60/minute")
 async def update_druzyna(
+    request: Request,
     druzyna_id: int,
     druzyna_data: DruzynaCreate,
     druzyna_service: DruzynaService = Depends(get_druzyna_service),
@@ -240,7 +254,9 @@ async def update_druzyna(
         raise HTTPException(status_code=400, detail=str(e))
 
 @app.delete("/druzyny/{druzyna_id}")
+@limiter.limit("60/minute")
 def delete_druzyna(
+    request: Request,
     druzyna_id: int,
     druzyna_service: DruzynaService = Depends(get_druzyna_service),
     current_user: User = Depends(get_current_user)
@@ -276,7 +292,9 @@ def list_upcoming_wyjazdy(
     ]
 
 @app.post("/wyjazdy", response_model=WyjazdResponse)
+@limiter.limit("60/minute")
 async def create_wyjazd(
+    request: Request,
     wyjazd_data: WyjazdCreate,
     wyjazd_service: WyjazdService = Depends(get_wyjazd_service),
     current_user: User = Depends(get_current_user)
@@ -314,7 +332,9 @@ async def create_wyjazd(
         raise HTTPException(status_code=400, detail=str(e))
 
 @app.put("/wyjazdy/{wyjazd_id}", response_model=WyjazdResponse)
+@limiter.limit("60/minute")
 async def update_wyjazd(
+    request: Request,
     wyjazd_id: int,
     wyjazd_data: WyjazdCreate,
     wyjazd_service: WyjazdService = Depends(get_wyjazd_service),
@@ -354,7 +374,9 @@ async def update_wyjazd(
         raise HTTPException(status_code=400, detail=str(e))
 
 @app.delete("/wyjazdy/{wyjazd_id}")
+@limiter.limit("60/minute")
 def delete_wyjazd(
+    request: Request,
     wyjazd_id: int,
     wyjazd_service: WyjazdService = Depends(get_wyjazd_service),
     current_user: User = Depends(get_current_user)
@@ -388,7 +410,9 @@ def list_komenda(
     ]
 
 @app.post("/komenda", response_model=KomendaResponse)
+@limiter.limit("60/minute")
 async def create_komenda(
+    request: Request,
     komenda_data: KomendaCreate,
     komenda_service: KomendaService = Depends(get_komenda_service),
     current_user: User = Depends(get_current_user)
@@ -418,7 +442,9 @@ async def create_komenda(
         raise HTTPException(status_code=400, detail=str(e))
 
 @app.put("/komenda/{komenda_id}", response_model=KomendaResponse)
+@limiter.limit("60/minute")
 async def update_komenda(
+    request: Request,
     komenda_id: int,
     komenda_data: KomendaCreate,
     komenda_service: KomendaService = Depends(get_komenda_service),
@@ -450,7 +476,9 @@ async def update_komenda(
         raise HTTPException(status_code=400, detail=str(e))
 
 @app.delete("/komenda/{komenda_id}")
+@limiter.limit("60/minute")
 def delete_komenda(
+    request: Request,
     komenda_id: int,
     komenda_service: KomendaService = Depends(get_komenda_service),
     current_user: User = Depends(get_current_user)
@@ -484,7 +512,9 @@ def list_komisja_rewizyjna(
     ]
 
 @app.post("/komisja-rewizyjna", response_model=KomisjaRewizyjnaResponse)
+@limiter.limit("60/minute")
 async def create_komisja_rewizyjna(
+    request: Request,
     komisja_data: KomisjaRewizyjnaCreate,
     komisja_service: KomisjaRewizyjnaService = Depends(get_komisja_service),
     current_user: User = Depends(get_current_user)
@@ -514,7 +544,9 @@ async def create_komisja_rewizyjna(
         raise HTTPException(status_code=400, detail=str(e))
 
 @app.put("/komisja-rewizyjna/{komisja_id}", response_model=KomisjaRewizyjnaResponse)
+@limiter.limit("60/minute")
 async def update_komisja_rewizyjna(
+    request: Request,
     komisja_id: int,
     komisja_data: KomisjaRewizyjnaCreate,
     komisja_service: KomisjaRewizyjnaService = Depends(get_komisja_service),
@@ -546,7 +578,9 @@ async def update_komisja_rewizyjna(
         raise HTTPException(status_code=400, detail=str(e))
 
 @app.delete("/komisja-rewizyjna/{komisja_id}")
+@limiter.limit("60/minute")
 def delete_komisja_rewizyjna(
+    request: Request,
     komisja_id: int,
     komisja_service: KomisjaRewizyjnaService = Depends(get_komisja_service),
     current_user: User = Depends(get_current_user)

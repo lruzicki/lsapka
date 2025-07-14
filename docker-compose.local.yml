@@ -17,10 +17,10 @@ services:
       - ls_web_network
     restart: unless-stopped
 
-  # FastAPI Backend (ls-web)
-  ls_web_api:
+  # FastAPI Backend (lsapka)
+  lsapka_api:
     build: ./backend
-    container_name: ls_web_api
+    container_name: lsapka_api
     ports:
       - "8001:8001"
     environment:
@@ -28,7 +28,7 @@ services:
     depends_on:
       - postgres
     networks:
-      - ls_web_network
+      - lsapka_network
     volumes:
       - ./backend:/app
     command: uvicorn main:app --host 0.0.0.0 --port 8001 --reload
@@ -36,10 +36,10 @@ services:
       - ./backend/.env
     restart: unless-stopped
 
-  # Next.js Frontend (ls-web)
-  ls_web:
+  # Next.js Frontend (lsapka)
+  lsapka:
     build: .
-    container_name: ls_web_frontend
+    container_name: lsapka_frontend
     ports:
       - "3000:3000"
     env_file:
@@ -49,14 +49,14 @@ services:
       API_BASE_URL: http://localhost:8001
       PORT: 3000
     depends_on:
-      - ls_web_api
+      - lsapka_api
     networks:
-      - ls_web_network
+      - lsapka_network
     restart: unless-stopped
 
 volumes:
   postgres_data:
 
 networks:
-  ls_web_network:
+  lsapka_network:
     driver: bridge 
