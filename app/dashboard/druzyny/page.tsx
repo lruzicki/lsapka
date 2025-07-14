@@ -280,7 +280,7 @@ export default function DruzynyPage() {
                                            <div className="flex items-center gap-2">
                        <div className="w-8 h-8 bg-[rgba(var(--primary),0.1)] rounded-full flex items-center justify-center">
                          <span className="text-sm font-bold text-[rgb(var(--primary))]">
-                           {druzyna.nazwa.charAt(0).toUpperCase()}
+                           {druzyna.nazwa.match(/\d+/)?.[0]?.charAt(0) || druzyna.nazwa.charAt(0).toUpperCase()}
                          </span>
                        </div>
                        <h4 className="font-bold text-lg">{druzyna.nazwa}</h4>

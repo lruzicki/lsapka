@@ -182,12 +182,12 @@ export default function MapSection() {
                             >
                               <div className="h-10 w-10 rounded-full flex items-center justify-center flex-shrink-0 mr-4 transition-colors bg-gray-300 hover:bg-[rgb(var(--primary))]">
                                 <span className="font-bold transition-colors text-gray-700">
-                                  {druzyna.nazwa.charAt(0).toUpperCase()}
+                                  {druzyna.nazwa.match(/\d+/)?.[0]?.charAt(0) || druzyna.nazwa.charAt(0).toUpperCase()}
                                 </span>
                               </div>
                               <div className="flex-1">
                                 <h4 className="font-bold text-lg transition-colors text-gray-900">
-                                  {druzyna.nazwa}
+                                  {druzyna.nazwa.split(' ')[0]}
                                 </h4>
                                 <p className="text-sm text-gray-600">{druzyna.miasto}</p>
                               </div>

@@ -219,7 +219,7 @@ export default function AboutSection() {
             href="https://nkihlesnaszkolka.sharepoint.com/:f:/s/NKIHLS-dokumentypubliczne/ErDdWMWDSFlDmXxJayyzJMsBkeRIuZovo3a6dhdwezUh2w?e=9VTkpQ"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block bg-[rgb(var(--primary))] hover:bg-[rgb(var(--primary-dark))] text-white px-6 py-3 rounded-md transition-colors flex items-center gap-2"
+            className="inline-flex bg-[rgb(var(--primary))] hover:bg-[rgb(var(--primary-dark))] text-white px-6 py-3 rounded-md transition-colors items-center gap-2"
           >
             Zobacz dokumenty
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
