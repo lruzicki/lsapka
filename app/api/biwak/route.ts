@@ -75,7 +75,7 @@ export async function POST(request: Request) {
       </html>
     `;
 
-    await emailService.sendEmail(process.env.BIWAK_NOTIFICATION_EMAIL || "lruzicki@lesnaszkolka.org", subject, {
+    await emailService.sendEmail(process.env.BIWAK_NOTIFICATION_EMAIL || "komenda@lesnaszkolka.org", subject, {
       name: submittedBy || "System",
       email: submittedByEmail || "system@lesnaszkolka.org",
       message: emailContent

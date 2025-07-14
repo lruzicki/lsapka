@@ -45,7 +45,7 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:3000", 
         "http://localhost:3001",
-        "https://test.lesnaszkolka.org",
+        "https://lesnaszkolka.org",
         "https://lesnaszkolka.org"
     ],  # Frontend URLs
     allow_credentials=True,
