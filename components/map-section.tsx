@@ -181,8 +181,8 @@ export default function MapSection() {
                               onClick={() => centerOnPinezka(pinezka)}
                             >
                               <div className="h-10 w-10 rounded-full flex items-center justify-center flex-shrink-0 mr-4 transition-colors bg-gray-300 hover:bg-[rgb(var(--primary))]">
-                                <span className="font-bold transition-colors text-gray-700">
-                                  {druzyna.nazwa.split(' ')[0].charAt(0).toUpperCase()}
+                                <span className="font-bold transition-colors text-gray-700 text-xs">
+                                  {druzyna.nazwa.split(' ')[0]}
                                 </span>
                               </div>
                               <div className="flex-1">
