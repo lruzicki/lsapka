@@ -149,7 +149,7 @@ export default function MapSection() {
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Mapa drużyn</h2>
           <div className="w-20 h-1 bg-[rgb(var(--primary))] mx-auto mb-8"></div>
           <p className="text-lg text-gray-700">
-            Znajdź nasze drużyny i kręgi instruktorskie w całej Polsce.
+            Znajdź nasze jednostki działające w Trójmieście.
           </p>
         </div>
 

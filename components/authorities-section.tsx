@@ -24,7 +24,7 @@ export default function AuthoritiesSection() {
                 Instruktor z 20-letnim stażem, specjalista w zakresie metodyki harcerskiej i organizacji obozów.
               </p>
               <div className="flex justify-center space-x-4">
-                <a href="mailto:komendant@lesnaszkolka.pl" className="text-gray-600 hover:text-[rgb(var(--primary))]">
+                <a href="mailto:komendant@lesnaszkolka.org" className="text-gray-600 hover:text-[rgb(var(--primary))]">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"
@@ -77,7 +77,7 @@ export default function AuthoritiesSection() {
                 Instruktorka z 15-letnim stażem, specjalistka w zakresie pracy z kadrą i kształcenia instruktorów.
               </p>
               <div className="flex justify-center space-x-4">
-                <a href="mailto:zastepca@lesnaszkolka.pl" className="text-gray-600 hover:text-[rgb(var(--primary))]">
+                <a href="mailto:zastepca@lesnaszkolka.org" className="text-gray-600 hover:text-[rgb(var(--primary))]">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"
@@ -125,7 +125,7 @@ export default function AuthoritiesSection() {
                 Instruktor z 10-letnim stażem, odpowiedzialny za finanse i sprawy organizacyjne Kręgu.
               </p>
               <div className="flex justify-center space-x-4">
-                <a href="mailto:skarbnik@lesnaszkolka.pl" className="text-gray-600 hover:text-[rgb(var(--primary))]">
+                <a href="mailto:skarbnik@lesnaszkolka.org" className="text-gray-600 hover:text-[rgb(var(--primary))]">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"

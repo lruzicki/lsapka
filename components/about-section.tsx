@@ -63,7 +63,7 @@ export default function AboutSection() {
             dniach 25 czerwca-16 lipca 1981, w ramach obozu ZHP w Wygoninie.
           </p>
           <p className="text-lg text-gray-700">
-            Nazwa kursu był dosłownym tłumaczeniem kryptonimiu czeskich leśnych kursów instruktorskich - Lesní Škola. Od
+            Nazwa kursu była dosłownym tłumaczeniem kryptonimu czeskich leśnych kursów instruktorskich - Lesní Škola. Od
             tego czasu kontynuujemy tradycje leśnych kursów, kształcąc kolejne pokolenia instruktorów harcerskich.
           </p>
         </div>

@@ -90,12 +90,14 @@ export default function EventsSection() {
                   )
                 })}
             </div>
-            <Link
-                href="/dashboard/wyjazdy"
+            <a
+                href="https://www.facebook.com/lesnaszkolka/?locale=pl_PL"
+                target="_blank"
+                rel="noopener noreferrer"
               className="inline-block mt-8 text-[rgb(var(--primary))] font-medium hover:underline"
             >
               Zobacz pełen kalendarz →
-            </Link>
+            </a>
           </div>
 
           <div className="bg-white p-8 rounded-lg shadow-sm border border-gray-100">
@@ -122,12 +124,14 @@ export default function EventsSection() {
               </div>
                     )}
             </div>
-            <Link
-                    href="/dashboard/wyjazdy"
+            <a
+                    href="https://www.facebook.com/lesnaszkolka/?locale=pl_PL"
+                    target="_blank"
+                    rel="noopener noreferrer"
               className="inline-block bg-[rgb(var(--primary))] hover:bg-[rgb(var(--primary-dark))] text-white px-6 py-3 rounded-md transition-colors"
             >
               Szczegóły i zapisy
-            </Link>
+            </a>
                 </>
               )}
             </div>

@@ -63,7 +63,7 @@ export default function SignInPage() {
             <div className="mt-6 text-center text-sm text-gray-600">
               <p>
                 Potrzebujesz pomocy?{" "}
-                <a href="mailto:pomoc@lesnaszkolka.pl" className="text-[rgb(var(--primary))] hover:underline">
+                <a href="mailto:komenda@lesnaszkolka.org" className="text-[rgb(var(--primary))] hover:underline">
                   Skontaktuj się z administratorem
                 </a>
               </p>

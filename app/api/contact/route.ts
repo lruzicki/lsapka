@@ -38,8 +38,8 @@ export async function POST(request: Request) {
     }
 
     const toEmail = recipient === 'komenda' 
-    ? 'komenda@lesnaszkolka.pl' 
-    : 'kr@lesnaszkolka.pl';
+    ? 'komenda@lesnaszkolka.org' 
+    : 'kr@lesnaszkolka.org';
 
     await emailService.sendEmail(toEmail, subject, {
       name,
