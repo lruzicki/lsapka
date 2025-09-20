@@ -1,5 +1,84 @@
-# LS-Web - Strona Leśnej Szkółki
+<img width="700" height="560" alt="image" src="https://github.com/user-attachments/assets/30bebc89-b9b9-43b9-bec3-ad10b15f5dab" /># LS-Web - Strona Leśnej Szkółki
 
+W skrócie, są dwa repozytoria. W azure jest aplikacja. Z jej glownego poziomu uzywasz configa do dockera, który buduje wszystkie serwisy.
+
+# INO - Impreza na Orientację - Deployment Guide
+
+## Azure Portal Setup
+
+1. **Link do Azure Portal**: [https://portal.azure.com](https://portal.azure.com/#home)
+2. **Wybór serwisu**: `ls-web-app` (Virtual Machine)
+<img width="1131" height="806" alt="image" src="https://github.com/user-attachments/assets/7675262e-671f-42fa-87d4-738bec38efcc" />
+
+3. **Połączenie przez SSH w przeglądarce**: 
+   - W Azure Portal → Virtual Machines → ls-web-app
+   - Kliknij "Connect" → "SSH" → "Connect"
+<img width="516" height="276" alt="image" src="https://github.com/user-attachments/assets/5015918a-bf1b-4044-8376-f9f6fcd5db95" />
+<img width="506" height="261" alt="image" src="https://github.com/user-attachments/assets/60bdf58f-272a-43b7-a10b-32460fe38026" />
+<img width="700" height="560" alt="image" src="https://github.com/user-attachments/assets/1dfec680-bbbf-4a68-856b-a33804613db5" />
+
+## Struktura folderów na serwerze
+/home/azureuser/
+├── inols/ # Frontend (Next.js + Tailwind)
+├── lsapka/ # Backend API
+├── docker-compose.production.yml
+├── nginx-inols.conf
+└── nginx-lsapka.conf
+
+
+## Repozytoria GitHub
+
+1. **Backend API**: https://github.com/lruzicki/lsapka
+2. **Frontend**: https://github.com/lruzicki/inols
+
+## Tech Stack
+
+- **Frontend**: Next.js + Tailwind CSS
+- **UI Components**: 
+  - https://v0.app/ (AI-powered components)
+  - https://ui.shadcn.com/docs/installation/next (shadcn/ui)
+
+## Lokalny development
+
+```bash
+# Wejdź do folderu repozytorium
+cd inols/
+
+# Instalacja i uruchomienie
+npm run tsc
+npm i
+npm run start
+npm run dev
+```
+
+## Deployment na serwerze
+
+### lsapka (Backend API)
+```bash
+# Z folderu lsapka/
+sudo docker compose -f docker-compose.production.yml build lsapka 
+sudo docker compose -f docker-compose.production.yml up -d lsapka 
+```
+
+### inols (Frontend)
+```bash
+# Z folderu głównego (zawierającego oba repozytoria)
+sudo docker compose -f docker-compose.production.yml build inols_web api
+sudo docker compose -f docker-compose.production.yml up -d inols_web api
+```
+
+## TODO List
+
+- [ ] Dodać zapis archiwum wydarzeń aby były dodawane na dole
+- [ ] Zmienić karuzele aby pobierała poprzednie wydarzenia a nie hardkodowane
+
+## Uwagi
+
+- lsapka ma ograniczenia pamięci - build lokalnie i deploy
+- Używaj docker-compose.production.yml dla produkcji
+- Nginx configs są w głównym folderze
+
+---------------------------------------------------------------------
 ## Opis
 
 Strona internetowa Niezależnego Kręgu Instruktorów Harcerskich "Leśna Szkółka" z pełnym systemem zarządzania treścią.
