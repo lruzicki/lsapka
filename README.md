@@ -1,4 +1,4 @@
-<img width="700" height="560" alt="image" src="https://github.com/user-attachments/assets/30bebc89-b9b9-43b9-bec3-ad10b15f5dab" /># LS-Web - Strona Leśnej Szkółki
+
 
 W skrócie, są dwa repozytoria. W azure jest aplikacja. Z jej glownego poziomu uzywasz configa do dockera, który buduje wszystkie serwisy.
 
