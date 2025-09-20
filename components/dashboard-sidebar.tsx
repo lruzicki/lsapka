@@ -30,7 +30,7 @@ export default function DashboardSidebar() {
       href: "/dashboard/druzyny",
     },
     {
-      title: "Wyjazdy",
+      title: "Wydarzenia",
       icon: <Map className="h-5 w-5" />,
       href: "/dashboard/wyjazdy",
     },

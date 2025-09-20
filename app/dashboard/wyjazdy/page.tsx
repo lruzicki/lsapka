@@ -45,7 +45,7 @@ export default function WyjazdyPage() {
   }
 
   const handleDelete = async (id: number) => {
-    if (!confirm('Czy na pewno chcesz usunąć ten wyjazd?')) return
+    if (!confirm('Czy na pewno chcesz usunąć to wydarzenie?')) return
 
     try {
       const headers: HeadersInit = {}
@@ -148,13 +148,13 @@ export default function WyjazdyPage() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold">Zarządzanie wyjazdami</h1>
+        <h1 className="text-3xl font-bold">Zarządzanie wydarzeniami</h1>
         <button
           onClick={() => setShowForm(true)}
           className="bg-[rgb(var(--primary))] hover:bg-[rgb(var(--primary-dark))] text-white px-4 py-2 rounded-md flex items-center gap-2 transition-colors"
         >
           <Plus className="h-5 w-5" />
-          Dodaj wyjazd
+          Dodaj wydarzenie
         </button>
       </div>
 
@@ -167,12 +167,12 @@ export default function WyjazdyPage() {
       {showForm && (
         <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
           <h2 className="text-xl font-bold mb-4">
-            {editingWyjazd ? 'Edytuj wyjazd' : 'Dodaj nowy wyjazd'}
+            {editingWyjazd ? 'Edytuj wydarzenie' : 'Dodaj nowy wydarzenie'}
           </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Tytuł wyjazdu
+                Tytuł wydarzenia
               </label>
               <input
                 type="text"
@@ -256,7 +256,7 @@ export default function WyjazdyPage() {
                 type="submit"
                 className="bg-[rgb(var(--primary))] hover:bg-[rgb(var(--primary-dark))] text-white px-4 py-2 rounded-md transition-colors"
               >
-                {editingWyjazd ? 'Zapisz zmiany' : 'Dodaj wyjazd'}
+                {editingWyjazd ? 'Zapisz zmiany' : 'Dodaj wydarzenie'}
               </button>
               <button
                 type="button"
@@ -325,7 +325,7 @@ export default function WyjazdyPage() {
       {wyjazdy.length === 0 && !loading && (
         <div className="text-center py-12">
           <Calendar className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">Brak zaplanowanych wyjazdów</h3>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">Brak zaplanowanych wydarzeń</h3>
           <p className="text-gray-600">Dodaj pierwszy wyjazd, aby rozpocząć planowanie.</p>
         </div>
       )}
