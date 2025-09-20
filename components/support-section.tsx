@@ -25,7 +25,7 @@ export default function SupportSection() {
                 </li>
                 <li>
                   <span className="font-medium">Wpisz numer KRS</span> - w odpowiednie pole wpisz numer KRS naszej
-                  organizacji: <span className="font-bold">0000111988</span>.
+                  organizacji: <span className="font-bold">0000118999</span>.
                 </li>
                 <li>
                   <span className="font-medium">Wpisz kwotę</span> - oblicz 1,5% swojego podatku i wpisz obliczoną kwotę
@@ -46,7 +46,7 @@ export default function SupportSection() {
                 <div className="space-y-2">
                   <div className="grid grid-cols-[140px_1fr] items-center">
                     <span className="font-medium">Numer KRS:</span>
-                    <span className="font-bold">0000111988</span>
+                    <span className="font-bold">0000118999</span>
                   </div>
                   <div className="grid grid-cols-[140px_1fr] items-center">
                     <span className="font-medium">Nazwa:</span>
