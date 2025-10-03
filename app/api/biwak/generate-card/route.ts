@@ -238,7 +238,15 @@ export async function POST(request: Request) {
         '--disable-gpu',
         '--no-first-run',
         '--no-zygote',
-        '--single-process'
+        '--single-process',
+        '--headless=new',
+        '--disable-web-security',
+        '--disable-features=VizDisplayCompositor',
+        '--disable-background-timer-throttling',
+        '--disable-renderer-backgrounding',
+        '--disable-backgrounding-occluded-windows',
+        '--remote-debugging-port=0',
+        '--disable-ipc-flooding-protection'
       );
     }
 
@@ -263,7 +271,10 @@ export async function POST(request: Request) {
 
     await browser.close();
 
-    return new NextResponse(pdf, {
+    // Convert Uint8Array to Buffer for NextResponse
+    const pdfBuffer = Buffer.from(pdf);
+
+    return new NextResponse(pdfBuffer, {
       headers: {
         'Content-Type': 'application/pdf',
         'Content-Disposition': `attachment; filename="biwak-${termin.replace(/[^a-zA-Z0-9]/g, '-')}-${miejsce.replace(/[^a-zA-Z0-9]/g, '-')}.pdf"`
