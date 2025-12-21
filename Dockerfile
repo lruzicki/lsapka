@@ -43,10 +43,10 @@ COPY package*.json ./
 RUN npm ci --production
 
 # Copy built files from builder stage
-COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/next.config.js ./next.config.js
 
-CMD ["npm", "run", "start"]
+CMD ["node", "server.js"]
 
 EXPOSE 3000
