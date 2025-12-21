@@ -3,6 +3,14 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
+# Build arguments for environment variables
+ARG NEXT_PUBLIC_API_URL
+ARG API_BASE_URL
+
+# Set environment variables for build
+ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+ENV API_BASE_URL=${API_BASE_URL}
+
 # Copy package files
 COPY package*.json ./
 

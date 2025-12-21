@@ -80,7 +80,8 @@ export async function POST(request: Request) {
       email: submittedByEmail || "system@lesnaszkolka.org",
       message: emailContent
     });
-
+    console.log(`Email sent successfully to: ${process.env.BIWAK_NOTIFICATION_EMAIL}`);
+    console.log(`Subject: ${subject}`);
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error('Error in biwak API:', error);
