@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { Users, Shield, FileText } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
 
 interface Komenda {
@@ -226,6 +227,32 @@ export default function AboutSection() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
             </svg>
           </a>
+        </div>
+
+        <div className="bg-white p-6 rounded-lg shadow-sm mt-8">
+          <div className="text-center mb-6">
+            <h3 className="text-xl font-bold mb-2">Program ROHIS</h3>
+            <p className="text-gray-600">
+              Leśna Szkółka jest objęta wsparciem w ramach Rządowego Programu Wsparcia Rozwoju Organizacji Harcerskich
+              i Skautowych (ROHIS).
+            </p>
+          </div>
+          <div className="flex flex-col md:flex-row gap-6 items-center justify-center">
+            <Image
+              src="/images/ROHIS_2.svg"
+              alt="Logotyp programu ROHIS"
+              width={360}
+              height={120}
+              className="h-auto w-full max-w-[360px]"
+            />
+            <Image
+              src="/images/ROHIS_3.svg"
+              alt="Logotyp Narodowego Instytutu Wolności i programu ROHIS"
+              width={360}
+              height={120}
+              className="h-auto w-full max-w-[360px]"
+            />
+          </div>
         </div>
       </div>
     </section>

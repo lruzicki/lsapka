@@ -134,8 +134,8 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-10 pt-6 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-400 text-sm">
+        <div className="border-t border-gray-800 mt-10 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-gray-400 text-sm text-center md:text-left">
             © {new Date().getFullYear()} Leśna Szkółka. Wszelkie prawa zastrzeżone.
           </p>
           <div className="flex space-x-4 mt-4 md:mt-0">
@@ -148,6 +148,13 @@ export default function Footer() {
               Regulamin
             </a>
           </div>
+        </div>
+
+        <div className="mt-6 pt-6 border-t border-gray-800">
+          <p className="text-gray-400 text-sm text-center">
+            Współfinansowano ze środków Narodowego Instytutu Wolności - Centrum Rozwoju Społeczeństwa Obywatelskiego
+            w ramach Rządowego Programu Wsparcia Rozwoju Organizacji Harcerskich i Skautowych na lata 2018-2023.
+          </p>
         </div>
       </div>
     </footer>
