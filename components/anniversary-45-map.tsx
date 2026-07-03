@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useRef } from "react"
-import L from "leaflet"
 import "leaflet/dist/leaflet.css"
 
 type Anniversary45MapProps = {
@@ -11,7 +10,7 @@ type Anniversary45MapProps = {
 }
 
 export default function Anniversary45Map({ lat, lng, label }: Anniversary45MapProps) {
-  const mapRef = useRef<L.Map | null>(null)
+  const mapRef = useRef<import("leaflet").Map | null>(null)
   const mapIdRef = useRef(`anniversary-45-map-${Math.random().toString(36).slice(2, 10)}`)
 
   useEffect(() => {
@@ -19,26 +18,40 @@ export default function Anniversary45Map({ lat, lng, label }: Anniversary45MapPr
       return
     }
 
-    delete (L.Icon.Default.prototype as { _getIconUrl?: unknown })._getIconUrl
-    L.Icon.Default.mergeOptions({
-      iconRetinaUrl: "/images/marker-icon-2x.png",
-      iconUrl: "/images/marker-icon.png",
-    })
+    let cancelled = false
+    let mapInstance: import("leaflet").Map | null = null
 
-    const map = L.map(mapIdRef.current, {
-      scrollWheelZoom: false,
-    }).setView([lat, lng], 15)
+    const initMap = async () => {
+      const L = await import("leaflet")
 
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(map)
+      if (cancelled || mapRef.current) {
+        return
+      }
 
-    L.marker([lat, lng]).addTo(map).bindPopup(label).openPopup()
+      delete (L.Icon.Default.prototype as { _getIconUrl?: unknown })._getIconUrl
+      L.Icon.Default.mergeOptions({
+        iconRetinaUrl: "/images/marker-icon-2x.png",
+        iconUrl: "/images/marker-icon.png",
+      })
 
-    mapRef.current = map
+      mapInstance = L.map(mapIdRef.current, {
+        scrollWheelZoom: false,
+      }).setView([lat, lng], 15)
+
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      }).addTo(mapInstance)
+
+      L.marker([lat, lng]).addTo(mapInstance).bindPopup(label).openPopup()
+
+      mapRef.current = mapInstance
+    }
+
+    void initMap()
 
     return () => {
-      map.remove()
+      cancelled = true
+      mapInstance?.remove()
       mapRef.current = null
     }
   }, [label, lat, lng])
