@@ -105,4 +105,45 @@ class LoginResponse(BaseModel):
     success: bool
     message: str
     token: Optional[str] = None
-    user: Optional[UserResponse] = None 
+    user: Optional[UserResponse] = None
+
+
+class Anniversary45AccessRequest(BaseModel):
+    password: str
+
+
+class Anniversary45ScheduleItem(BaseModel):
+    label: str
+    value: str
+
+
+class Anniversary45VenueCoordinates(BaseModel):
+    lat: float
+    lng: float
+
+
+class Anniversary45Venue(BaseModel):
+    name: str
+    address: str
+    coordinates: Anniversary45VenueCoordinates
+
+
+class Anniversary45Image(BaseModel):
+    src: str
+    alt: str
+
+
+class Anniversary45Content(BaseModel):
+    title: str
+    intro: str
+    body: List[str]
+    schedule: List[Anniversary45ScheduleItem]
+    venue: Anniversary45Venue
+    hero_image: Anniversary45Image
+    gallery: List[Anniversary45Image]
+
+
+class Anniversary45EncryptedResponse(BaseModel):
+    salt: str
+    iv: str
+    ciphertext: str

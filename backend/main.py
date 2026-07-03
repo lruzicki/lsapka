@@ -3,6 +3,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from typing import List, Dict
 from datetime import datetime
+import base64
+import hashlib
+import hmac
+import json
+import os
 
 # Importy z naszych warstw
 from infrastructure.database import get_db, create_tables
@@ -26,11 +31,13 @@ from schemas import (
     WyjazdCreate, WyjazdResponse,
     KomendaCreate, KomendaResponse,
     KomisjaRewizyjnaCreate, KomisjaRewizyjnaResponse,
-    UserResponse, TokenResponse, AzureLoginRequest, LoginResponse
+    UserResponse, TokenResponse, AzureLoginRequest, LoginResponse,
+    Anniversary45AccessRequest, Anniversary45EncryptedResponse, Anniversary45Content
 )
 from infrastructure.auth_service import AzureAuthService
 from middleware.auth_middleware import get_current_user, require_roles, require_admin
 from domain.user import User
+from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 
 # Tworzenie aplikacji FastAPI
 app = FastAPI(
@@ -84,6 +91,66 @@ def get_auth_service(db: Session = Depends(get_db)) -> AzureAuthService:
     user_repository = SqlAlchemyUserRepository(db)
     return AzureAuthService(user_repository)
 
+
+ANNIVERSARY_45_PASSWORD_HASH = "ac82857ff113e4aea80498e0b0182977f9bb21c7245968ed23ae8d90318b276c"
+
+ANNIVERSARY_45_CONTENT = Anniversary45Content(
+    title="45-lecie Leśnej Szkółki",
+    intro="Spotkajmy się we wrześniu na wspólnym świętowaniu 45 lat Leśnej Szkółki.",
+    body=[
+        "Jakby nie liczyć – czy od kursu instruktorskiego podczas obozu w Wygoninie, czy od formalnego powołania Szkoleniowego Młodzieżowego Kręgu Instruktorskiego „Leśna Szkółka” przy Rejonie ZHP Przymorze – wychodzi na to, że początki Leśnej Szkółki to rok 1981.",
+        "Mija już więc 45 lat – 45 lat braterstwa, przyjaźni, wyzwań i harcerskich przygód ⚜️",
+        "Spotkajmy się więc w instruktorskim gronie: zapraszamy wszystkich, którzy (choć przez moment) byli członkami i członkiniami Kręgu, na obchody 45-lecia Leśnej Szkółki 🖤❤️",
+        "Więcej informacji niebawem – tymczasem zachęcamy do podawania tej informacji dalej. Do zobaczenia we wrześniu! 🫡",
+    ],
+    schedule=[
+        {"label": "Data", "value": "12.09.2026 r. (sobota)"},
+        {"label": "Start", "value": "17:00"},
+        {"label": "Zakończenie", "value": "13.09.2026 r. ok. 2:00"},
+        {"label": "Miejsce", "value": "Borodziej"},
+        {"label": "Adres", "value": "Borodziej, 80-298 Gdańsk"},
+    ],
+    venue={
+        "name": "Borodziej",
+        "address": "Borodziej, 80-298 Gdańsk",
+        "coordinates": {"lat": 54.432170, "lng": 18.509498},
+    },
+    hero_image={
+        "src": "/images/old-new-photo.png",
+        "alt": "Archiwalne i współczesne zdjęcie Leśnej Szkółki",
+    },
+    gallery=[
+        {"src": "/images/45-one.png", "alt": "Archiwalne zdjęcie grupowe Leśnej Szkółki 1"},
+        {"src": "/images/45-two.png", "alt": "Archiwalne zdjęcie grupowe Leśnej Szkółki 2"},
+        {"src": "/images/45-three.png", "alt": "Archiwalne zdjęcie grupowe Leśnej Szkółki 3"},
+        {"src": "/images/45-four.png", "alt": "Archiwalne zdjęcie grupowe Leśnej Szkółki 4"},
+        {"src": "/images/45-five.png", "alt": "Archiwalne zdjęcie grupowe Leśnej Szkółki 5"},
+        {"src": "/images/45-six.png", "alt": "Archiwalne zdjęcie grupowe Leśnej Szkółki 6"},
+        {"src": "/images/45-seven.png", "alt": "Archiwalne zdjęcie grupowe Leśnej Szkółki 7"},
+        {"src": "/images/45-eight.png", "alt": "Archiwalne zdjęcie grupowe Leśnej Szkółki 8"},
+    ],
+)
+
+
+def is_valid_anniversary_45_password(password: str) -> bool:
+    incoming_hash = hashlib.sha256(password.encode("utf-8")).digest()
+    expected_hash = bytes.fromhex(ANNIVERSARY_45_PASSWORD_HASH)
+    return hmac.compare_digest(incoming_hash, expected_hash)
+
+
+def encrypt_anniversary_45_payload(password: str, payload: Anniversary45Content) -> Anniversary45EncryptedResponse:
+    salt = os.urandom(16)
+    iv = os.urandom(12)
+    key = hashlib.pbkdf2_hmac("sha256", password.encode("utf-8"), salt, 120000, dklen=32)
+    plaintext = json.dumps(payload.model_dump(mode="json"), ensure_ascii=False).encode("utf-8")
+    ciphertext = AESGCM(key).encrypt(iv, plaintext, None)
+
+    return Anniversary45EncryptedResponse(
+        salt=base64.b64encode(salt).decode("ascii"),
+        iv=base64.b64encode(iv).decode("ascii"),
+        ciphertext=base64.b64encode(ciphertext).decode("ascii"),
+    )
+
 # Endpointy autoryzacji
 @app.post("/auth/azure-login", response_model=LoginResponse)
 async def azure_login(
@@ -135,6 +202,14 @@ async def get_current_user_info(current_user: User = Depends(get_current_user)):
         created_at=current_user.created_at,
         updated_at=current_user.updated_at
     )
+
+
+@app.post("/anniversary/45", response_model=Anniversary45EncryptedResponse)
+async def get_anniversary_45_content(access_data: Anniversary45AccessRequest):
+    if not is_valid_anniversary_45_password(access_data.password):
+        raise HTTPException(status_code=401, detail="Nieprawidłowe hasło.")
+
+    return encrypt_anniversary_45_payload(access_data.password, ANNIVERSARY_45_CONTENT)
 
 # Endpointy dla drużyn
 @app.post("/druzyny", response_model=DruzynaResponse)
